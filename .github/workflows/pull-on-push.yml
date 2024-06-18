@@ -1,0 +1,32 @@
+name: Pull on Push
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que você deseja monitorar
+
+jobs:
+  pull_repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Pull Latest Changes
+        run: |
+          git pull origin main  # substitua "main" pela sua branch, se necessário
+
+      - name: Deploy to Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'cd /caminho/para/seu/projeto
+          && git pull origin main
+          && composer install
+          && npm install
+          && php artisan migrate
+          && npm run build'
