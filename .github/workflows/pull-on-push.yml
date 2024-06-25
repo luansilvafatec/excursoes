@@ -23,8 +23,11 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'cd /caminho/para/seu/projeto
+          echo "
+          $SSH_PRIVATE_KEY" | tr -d '\r' | \
+          ssh-add - > /dev/null \
+          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST \
+          'cd /caminho/para/seu/projeto \
           && git pull origin main
           && composer install
           && npm install

@@ -4,8 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Evento;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable
 {
@@ -40,8 +43,24 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function eventos(): BelongsToMany
+    {
+        return $this->belongsToMany(Evento::class, 'passageiros', 'user_id', 'evento_id');
+    }
+
+    public function pagamentos(): HasManyThrough
+    {
+        return $this->hasManyThrough(Pagamento::class, Passageiro::class);
+    }
+
+    public function pagamentoEvento(Evento $evento){
+        return $this->pagamentos()->where("evento_id", $evento->id)->get();
+    }
+    public function TotalPagoEvento(Evento $evento){
+        return $this->pagamentos()->where("evento_id", $evento->id)->sum('valor');
     }
 }

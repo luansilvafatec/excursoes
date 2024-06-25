@@ -1,5 +1,9 @@
 <x-layout.layout-base>
-    teste
+    <a href="{{route('login')}}">Login</a>
+
+    @foreach ($eventos as $evento)
+        {{$evento->titulo}}
+    @endforeach
 
 
 </x-layout.layout-base>

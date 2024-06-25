@@ -16,9 +16,13 @@ return new class extends Migration
             $table->id();
             $table->string("titulo");
             $table->text("descricao");
-            $table->string("capa");
+            $table->string("capa")->nullable();
+            $table->integer("vagas")->nullable();
+            $table->integer("meta_vagas")->nullable();
             $table->float("valor")->nullable();
             $table->boolean("ingresso_incluso")->default(false);
+            $table->date("data_inscricao_inicio");
+            $table->date("data_inscricao_fim")->nullable();
             $table->date("data_inicio");
             $table->date("data_fim")->nullable();
             $table->time("hora_saida")->nullable();
