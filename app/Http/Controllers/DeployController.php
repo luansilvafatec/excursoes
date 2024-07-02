@@ -10,6 +10,7 @@ class DeployController extends Controller
 {
     public function deploy($password)
     {
+        dd(base_path());
         $validPassword = env('GIT_PASSWORD'); // Altere para a senha desejada
 
         if ($password !== $validPassword) {
