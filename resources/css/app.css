@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .card {
+    @apply flex flex-col items-center justify-center rounded-lg bg-white shadow-lg pb-4;
+  }
+
+  .btn-primary-base {
+    @apply bg-green-500 rounded-xl px-7 py-5 text-sm font-bold text-white;
+  }
+  .btn-secondary-base {
+    @apply bg-secondary hover:bg-secondary+1 focus:bg-secondary-1 rounded-md px-7 py-5 text-sm font-bold text-white;
+  }
+  .input-base {
+    @apply border-grey-4 focus:border-info rounded-xl border-2 p-4 shadow-md focus:outline-none;
+  }
+  /* ///////////////////////////ALPINEJS/////////////////////////////////// */
+
+  [x-cloak] {
+    display: none !important;
+  }
+}
