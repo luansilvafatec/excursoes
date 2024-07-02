@@ -10,7 +10,7 @@ class DeployController extends Controller
 {
     public function deploy($password)
     {
-        $validPassword = env('SENHA_GIT'); // Altere para a senha desejada
+        $validPassword = env('GIT_PASSWORD'); // Altere para a senha desejada
 
         if ($password !== $validPassword) {
             return response()->json(['error' => 'Senha inválida!'], 403);
