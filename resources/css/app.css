@@ -7,6 +7,17 @@
     @apply flex flex-col items-center justify-center rounded-lg bg-white shadow-lg pb-4;
   }
 
+  .base-input {
+    @apply w-full rounded-md border-0 bg-[#F3F3F7];
+  }
+
+  .just-validate-error-field{
+    @apply bg-red-100 focus:ring-red-600;
+  }
+  .just-validate-success-field{
+    @apply bg-green-100;
+  }
+
   .btn-primary-base {
     @apply bg-green-500 rounded-xl px-7 py-5 text-sm font-bold text-white;
   }

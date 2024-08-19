@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Passageiro;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Passageiro::class);
             $table->float("valor");
             $table->integer("pagamento_meio")->default(0);
-            $table->foreignId("recebedor_id");
+            $table->foreignIdFor(User::class, "recebedor_id")->nullable();
             $table->timestamps();
         });
     }

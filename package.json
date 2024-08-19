@@ -8,7 +8,6 @@
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
         "autoprefixer": "^10.4.19",
-        "axios": "^1.6.4",
         "daisyui": "^4.12.2",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.38",
@@ -17,6 +16,8 @@
     },
     "dependencies": {
         "@alpinejs/mask": "^3.14.1",
-        "alpinejs": "^3.14.1"
+        "alpinejs": "^3.14.1",
+        "just-validate": "^4.3.0",
+        "just-validate-plugin-date": "^1.2.0"
     }
 }

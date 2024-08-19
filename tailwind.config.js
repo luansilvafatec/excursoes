@@ -6,7 +6,17 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                'cinza_cadastro': '#828282',
+            },
+            fontFamily: {
+                'roboto': "'Roboto', sans-serif",
+            },
+            screens: {
+                'xs': '360px',
+            }
+        },
     },
     plugins: [
         require('@tailwindcss/forms'),

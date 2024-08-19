@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger("tipo")->default(0);
             $table->string('nome');
+            $table->string('foto')->nullable();
             $table->string('nome_social')->nullable();
             $table->string('RG');
             $table->string('CPF');

@@ -15,11 +15,15 @@ return new class extends Migration
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string("titulo");
-            $table->text("descricao");
+            $table->string("titulo_completo");
+            $table->string("descricao_curta");
+            $table->text("descricao_longa");
+            $table->string("foto_card")->nullable();
             $table->string("capa")->nullable();
             $table->integer("vagas")->nullable();
             $table->integer("meta_vagas")->nullable();
             $table->float("valor")->nullable();
+            $table->float("pagamento_minimo")->nullable();
             $table->boolean("ingresso_incluso")->default(false);
             $table->date("data_inscricao_inicio");
             $table->date("data_inscricao_fim")->nullable();

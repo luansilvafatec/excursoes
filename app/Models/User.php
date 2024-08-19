@@ -63,4 +63,19 @@ class User extends Authenticatable
     public function TotalPagoEvento(Evento $evento){
         return $this->pagamentos()->where("evento_id", $evento->id)->sum('valor');
     }
+
+    public function getPrimeiroNomeAttribute(){
+        // Obtém o valor do campo 'nome_social', se não estiver vazio, retorna o primeiro nome
+        if (!empty($this->attributes['nome_social'])) {
+            return strtok($this->attributes['nome_social'], ' ');
+        }
+
+        // Se 'nome_social' estiver vazio, tenta o campo 'nome'
+        if (!empty($this->attributes['nome'])) {
+            return strtok($this->attributes['nome'], ' ');
+        }
+
+        // Retorna null se nenhum nome estiver disponível
+        return null;
+    }
 }

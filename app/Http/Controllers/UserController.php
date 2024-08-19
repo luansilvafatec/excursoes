@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Rules\Cpf;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -29,6 +30,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+        $validated = $request->validate([
+            'tipo' => 'required|integer|min:1|max:3',
+            'nome' => 'required|min:5|max:50',
+            'rg' => 'required|min:5|max:25',
+            'cpf' => ['required','unique:users,CPF', new Cpf()],
+            'email' => ['required','unique:users,email'],
+        ]);
+
         // dd($request);
         $user = new User();
         $user->tipo = $request->tipo;
@@ -36,7 +45,7 @@ class UserController extends Controller
         $user->nome_social = $request->nomeSocial;
         $user->RG = $request->rg;
         $user->CPF = preg_replace("/[^0-9]/", "",$request->cpf);
-        $user->nascimento = '1993-12-20';
+        $user->nascimento = $request->nascimento;
         $user->celular = $request->celular;
         $user->email = $request->email;
         $user->password = $request->password;
