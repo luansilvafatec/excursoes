@@ -7,7 +7,7 @@
     <title>Comandos</title>
 </head>
 <body>
-    <form action="/comandos" method="POST">
+    <form action="{{route('deploy')}}" method="POST">
         @csrf
         <input type="text" name="senha">
         <input type="text" name="comando">

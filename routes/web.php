@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-Route::get('/deploy/{password}', [DeployController::class, 'deploy']);
+Route::get('/deploy', [DeployController::class, 'deploy'])->name('deploy');
 
 Route::get('comandos/{password}', function ($password) {
     $validPassword = env('GIT_PASSWORD'); // Altere para a senha desejada
