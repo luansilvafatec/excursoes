@@ -19,6 +19,7 @@ class DeployController extends Controller
         try {
 
             $process = new Process([$_POST['comando']]);
+            $process->setWorkingDirectory(base_path());
             $process->run();
 
             // executes after the command finishes
