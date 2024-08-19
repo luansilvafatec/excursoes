@@ -18,7 +18,8 @@ class DeployController extends Controller
 
         try {
 
-            $process = new Process([$_POST['comando']]);
+            // $process = new Process([$_POST['comando']]);
+            $process = Process::fromShellCommandline($_POST['comando']);
             $process->setWorkingDirectory(base_path());
             $process->run();
 
