@@ -9,8 +9,10 @@
 <body>
     <form action="{{route('deploy')}}" method="POST">
         @csrf
-        <input type="text" name="senha">
-        <input type="text" name="comando">
+        <label for="senha">Senha</label>
+        <input type="text" name="senha" id="senha">
+        <label for="comando">Comando</label>
+        <input type="text" name="comando" id="comando">
 
         <button type="submit">Enviar</button>
     </form>
