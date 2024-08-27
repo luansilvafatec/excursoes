@@ -21,6 +21,7 @@ class DeployController extends Controller
             // $process = new Process([$_POST['comando']]);
             $process = Process::fromShellCommandline($_POST['comando']);
             $process->setWorkingDirectory(base_path());
+            $process->setTimeout(3600);
             $process->run();
 
             // executes after the command finishes
