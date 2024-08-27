@@ -12,6 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        // [SETUP HERE] Adminer Middleware group
+        $middleware->group('adminer', [
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\Auth\Middleware\Authenticate::class,
+            \App\Http\Middleware\Adminer::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

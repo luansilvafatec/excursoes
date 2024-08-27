@@ -5,7 +5,7 @@
             <img class="h-28 w-full object-cover"
                 src="https://tiinside.com.br/wp-content/uploads/2023/10/brasil-game-show-2022-e1696505407788.jpg"
                 alt="" />
-            <div class="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 px-10">
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 px-10">
                 <span class="grow border-2 border-white"></span>
                 <h1 class="mx-9 text-center font-roboto text-xl font-bold leading-5 text-white xs:text-4xl">
                     {{ $evento->titulo_completo }}</h1>

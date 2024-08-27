@@ -75,7 +75,7 @@ Route::post('/logar', function (Request $request) {
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home'));
+        return redirect()->intended(route('minhas-excursoes'));
     }
 
     return back()->withErrors([
@@ -105,3 +105,8 @@ Route::post('/validacpf', function (Request $request) {
 Route::get('/excursao/{evento}', function (Evento $evento) {
     return view('info-evento', compact('evento'));
 })->name('evento');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/minhas-excursoes', [UserController::class, 'minhasExcursoes'])->name('minhas-excursoes');
+    Route::get('/meus-dados', [UserController::class, 'meusDados'])->name('meus-dados');
+});

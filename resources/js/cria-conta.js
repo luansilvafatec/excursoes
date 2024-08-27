@@ -1,35 +1,7 @@
 import JustValidate from 'just-validate';
 import JustValidatePluginDate from 'just-validate-plugin-date';
 
-const login = new JustValidate('#formLogin', { submitFormAutomatically: true });
 const cadastro = new JustValidate('#formCadastro', { submitFormAutomatically: true, });
-
-login.addField('#cpf_login', [{
-    rule: 'required',
-    errorMessage: 'O CPF é obrigatório',
-},
-{
-    rule: 'minLength',
-    value: 14,
-},
-{
-    rule: 'maxLength',
-    value: 14,
-},
-])
-    .addField('#password_login', [{
-        rule: 'required',
-        errorMessage: 'A senha é obrigatória',
-    },
-    {
-        rule: 'minLength',
-        value: 3,
-    },
-    {
-        rule: 'maxLength',
-        value: 255,
-    },
-    ]);
 
 cadastro
     .onSuccess((event) => {
@@ -65,45 +37,6 @@ cadastro
         rule: 'minLength',
         value: 7,
         errorMessage: 'Digite seu RG',
-    }])
-    .addField('#cpf', [{
-        rule: 'required',
-        errorMessage: 'Digite seu CPF',
-    },
-    {
-        rule: 'minLength',
-        value: 14,
-        errorMessage: 'Digite seu CPF completo',
-    },
-    {
-        rule: 'maxLength',
-        value: 14,
-        errorMessage: 'Digite seu CPF corretamnete',
-    },
-    {
-        validator: (value) => () =>
-            new Promise((resolve) => {
-                fetch('/validacpf', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    },
-                    body: JSON.stringify({ cpf: value }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.valid) {
-                            resolve(true); // CPF válido
-                        } else {
-                            resolve(false); // CPF inválido
-                        }
-                    })
-                    .catch(() => {
-                        resolve(false); // Erro na validação
-                    });
-            }),
-        errorMessage: 'CPF inválido!',
     }])
     .addField('#email', [
         {
@@ -167,10 +100,53 @@ cadastro
         },
     ]);
 
+const cpf = document.querySelector("#cpf");
+if (cpf) {
+    cadastro.addField('#cpf', [{
+        rule: 'required',
+        errorMessage: 'Digite seu CPF',
+    },
+    {
+        rule: 'minLength',
+        value: 14,
+        errorMessage: 'Digite seu CPF completo',
+    },
+    {
+        rule: 'maxLength',
+        value: 14,
+        errorMessage: 'Digite seu CPF corretamnete',
+    },
+    {
+        validator: (value) => () =>
+            new Promise((resolve) => {
+                fetch('/validacpf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    },
+                    body: JSON.stringify({ cpf: value }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.valid) {
+                            resolve(true); // CPF válido
+                        } else {
+                            resolve(false); // CPF inválido
+                        }
+                    })
+                    .catch(() => {
+                        resolve(false); // Erro na validação
+                    });
+            }),
+        errorMessage: 'CPF inválido!',
+    }]);
+}
+
 document
     .querySelector('#tipo')
     .addEventListener('change', (e) => {
-        if (e.target.value == 2) {
+        if (e.target.value < 3) {
             cadastro.removeField('#semestre');
             cadastro.addField('#curso', [
                 {
@@ -178,7 +154,7 @@ document
                     errorMessage: 'Curso é obrigatório',
                 }
             ]);
-        } else if (e.target.value == 3) {
+        } else if (e.target.value == 4) {
             cadastro.removeField('#curso');
             cadastro.removeField('#semestre');
         } else {

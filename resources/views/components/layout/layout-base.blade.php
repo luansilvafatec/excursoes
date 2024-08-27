@@ -40,7 +40,7 @@
                         </div>
                         <span class="hidden xs:block">Quero viajar!</span>
                     </a>
-                    <ul class="absolute right-0 top-full min-w-[150px] origin-top-right -translate-x-0 rounded-lg border border-slate-200 bg-white p-2 shadow-xl"
+                    <ul class="absolute z-50 right-0 top-full min-w-[150px] origin-top-right -translate-x-0 rounded-lg border border-slate-200 bg-white p-2 shadow-xl"
                         x-show="open" x-transition:enter="transition ease-out duration-200 transform"
                         x-transition:enter-start="opacity-0 -translate-y-2"
                         x-transition:enter-end="opacity-100 translate-y-0"
@@ -48,11 +48,11 @@
                         x-transition:leave-end="opacity-0" x-cloak
                         @focusout="await $nextTick();!$el.contains($focus.focused()) && (open = false)">
                         <li>
-                            <a class="flex items-center p-2 text-slate-800 hover:bg-slate-50" href="#"> Meus dados
+                            <a  class="flex items-center p-2 text-slate-800 hover:bg-slate-50" href="{{route('meus-dados')}}"> Meus dados
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center p-2 text-slate-800 hover:bg-slate-50" href="#"> Minhas
+                            <a class="flex items-center p-2 text-slate-800 hover:bg-slate-50" href="{{route('minhas-excursoes')}}"> Minhas
                                 excursões </a>
                         </li>
                         <li>

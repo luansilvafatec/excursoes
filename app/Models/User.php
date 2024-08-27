@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Evento;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable
@@ -52,16 +53,50 @@ class User extends Authenticatable
         return $this->belongsToMany(Evento::class, 'passageiros', 'user_id', 'evento_id');
     }
 
+    public function passageiros() : HasMany {
+        return $this->hasMany(Passageiro::class);
+    }
+    public function esperaEvento(Evento $evento) {
+        return $this->passageiros()->select('espera')->where("evento_id", $evento->id)->first()->espera;
+    }
+
     public function pagamentos(): HasManyThrough
     {
-        return $this->hasManyThrough(Pagamento::class, Passageiro::class);
+        //return $this->hasManyThrough(Pagamento::class, Passageiro::class);
+        return $this->through('passageiros')->has('pagamentos');
     }
 
     public function pagamentoEvento(Evento $evento){
         return $this->pagamentos()->where("evento_id", $evento->id)->get();
     }
-    public function TotalPagoEvento(Evento $evento){
+    public function totalPagoEvento(Evento $evento){
         return $this->pagamentos()->where("evento_id", $evento->id)->sum('valor');
+    }
+    public function totalFaltaEvento(Evento $evento){
+        return $evento->valor - $this->totalPagoEvento($evento);
+    }
+    public function totalPercentEvento(Evento $evento){
+        return $this->totalPagoEvento($evento)/$evento->valor*100;
+    }
+    public function totalPagoEventoFormatado(Evento $evento){
+        return number_format($this->TotalPagoEvento($evento), 2, ',', '.');
+    }
+    public function totalFaltaEventoFormatado(Evento $evento){
+        return number_format($this->totalFaltaEvento($evento), 2, ',', '.');
+    }
+
+    public function statusEvento(Evento $evento){
+        if($this->totalPagoEvento($evento) >= $evento->valor){
+            return ["Quitado", "Está tudo certo, basta aguardar o dia da sua viagem e curtir!"];
+        }
+        if($this->totalPagoEvento($evento) > 0){
+            return ["Parcial", "Você pagou uma parte, mas não esqueça de pagar o restante da viagem. Não deixe para a última hora!"];
+        }
+        if($this->totalPagoEvento($evento) == 0 && $this->esperaEvento($evento) == 1){
+            return ["Espera", "Sabemos que você quer muito ir nessa viagem, mas estamos sem vagas. Te avisaremos assim que uma oportunidade surgir."];
+        }
+
+        return ["Pré Reserva", "Vamos segurar sua vaga por alguns dias, mas você precisa realizar um pagamento para garantir que vai na viagem."];
     }
 
     public function getPrimeiroNomeAttribute(){
