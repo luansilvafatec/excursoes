@@ -6,7 +6,7 @@
             <p class="mt-4">Faça sua pré-reserva para participar. Estamos ansiosos para compartilhar essa experiência
                 incrível com você!</p>
 
-            <button wire:click="preReserva" class="p-4 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pré
+            <button wire:click="preReserva" class="p-4 mt-10 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pré
                 reserva</button>
         </div>
     @elseif ($etapa == 2)
@@ -20,7 +20,7 @@
                 garantir a sua
                 vaga.</p>
 
-            <button wire:click="pagarPix" class="p-4 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pagar com
+            <button wire:click="pagarPix" class="p-4 mt-10 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pagar com
                 PIX</button>
         </div>
     @elseif($etapa == 3)
@@ -137,7 +137,7 @@
                     </div>
                 </div>
             </div>
-            <button wire:click="pagarPix" class="p-4 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pagar com
+            <button wire:click="pagarPix" class="p-4 mt-10 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pagar com
                 PIX</button>
         </div>
     @elseif ($etapa == 5)

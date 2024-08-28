@@ -34,7 +34,11 @@ class CardPagamento extends Component
                 $this->etapa = 5;
             break;
             case 0:
-                $this->etapa = 6;
+                if($this->evento->possui_vagas){
+                    $this->etapa = 1;
+                }else{
+                    $this->etapa = 6;
+                }
             break;
 
             default:
