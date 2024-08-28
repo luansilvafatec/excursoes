@@ -13,6 +13,45 @@ class Evento extends Model
 {
     use HasFactory;
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::retrieved(function ($evento) {
+
+            // Verificar se venceu a pré reserva de alguem e elimina
+            foreach ($evento->interessados as $key => $interessado) {
+                // Cria uma instância do Carbon a partir da data
+                $date = Carbon::parse($interessado->updated_at);
+
+                // Adiciona 5 dias à data
+                $date->addDays(5);
+
+                if($date <= Carbon::now()){
+                    $passageiro = Passageiro::find($interessado->id);
+                    $passageiro->delete();
+                }
+            }
+
+            // Verificar se esta na espera e adiciona na reserva
+            foreach ($evento->espera as $key => $espera) {
+
+                if($evento->vagas_disponiveis){
+                    $passageiro = Passageiro::find($espera->id);
+                    $passageiro->espera = 0;
+                    $passageiro->updated_at = Carbon::now();
+                    $passageiro->save();
+
+                    //salva na tabela notificados para ser avisado
+                    $notificado = new Notificado();
+                    $notificado->passageiro_id = $passageiro->id;
+                    $notificado->save();
+                }
+            }
+
+        });
+    }
+
 
 
     public function user() {
@@ -25,6 +64,7 @@ class Evento extends Model
         return $this->hasMany(Passageiro::class)->where('espera', true);
     }
 
+    //realizaram a pré reserva
     public function interessados() {
         return $this->passageiros()->whereDoesntHave('pagamentos');
     }

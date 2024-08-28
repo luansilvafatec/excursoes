@@ -136,7 +136,7 @@ class User extends Authenticatable
     public function ateReservaFormatado(Evento $evento)
     {
         // Supondo que $this->created_at seja um objeto Carbon ou uma data no formato aceito por Carbon
-        $createdAt = $this->passageiros()->where("evento_id", $evento->id)->first()->created_at;
+        $createdAt = $this->passageiros()->where("evento_id", $evento->id)->first()->updated_at;
 
         // Cria uma instância do Carbon a partir da data
         $date = Carbon::parse($createdAt);
