@@ -15,6 +15,11 @@
                 <form class="mb-6 mt-3 flex flex-col items-center" x-data="{ tipo: {{$user->tipo??0}} }" id="formCadastro"
                     action="{{ route('salva-usuario', $cpf) }}" method="post">
                     @csrf
+                    @if (session()->has('sucesso'))
+                        <div class="p-4 bg-green-100 text-green-700 font-bold w-full rounded-md border border-r-green-800">
+                            {{ session()->get('sucesso') }}
+                        </div>
+                    @endif
                     @if ($errors->any())
                         <div class="p-4 bg-red-100 text-red-700 font-bold w-full rounded-md border border-r-red-800">
                             <ul>

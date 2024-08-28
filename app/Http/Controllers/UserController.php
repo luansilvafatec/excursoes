@@ -271,5 +271,7 @@ class UserController extends Controller
         $user->password = $validated['password'];
 
         $user->save();
+
+        return redirect()->back()->with('sucesso', 'Dados salvos com sucesso');
     }
 }
