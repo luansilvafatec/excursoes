@@ -200,7 +200,7 @@ class UserController extends Controller
 
         $validated = $request->validate(
             [
-                'tipo' => 'required|integer|min:1|max:4',
+                'tipo' => 'required|integer|min:1|max:5',
                 'nome' => 'required|min:5|max:50',
                 'nomesocial' => 'nullable|min:3|max:50',
                 'rg' => 'required|min:5|max:25',
@@ -214,9 +214,13 @@ class UserController extends Controller
             ],
             [
                 'tipo.required' => 'O relação com a fatec é obrigatório',
+                'tipo.integer' => 'O relação com a fatec invália',
+                'tipo.integer' => 'O relação com a fatec fora do esperado',
                 'nome.required' => 'O Nome é obrigatório',
                 'nome.min' => 'O Nome precisa ter no mínimo 3 caracteres',
                 'nome.max' => 'O Nome precisa ter no máximo 50 caracteres',
+                'nomesocial.min' => 'O Nome Social precisa ter no mínimo 3 caracteres',
+                'nomesocial.max' => 'O Nome Social precisa ter no máximo 50 caracteres',
                 'rg.required' => 'O RG é obrigatório',
                 'rg.min' => 'O RG precisa ter no mínimo 5 caracteres',
                 'rg.max' => 'O RG precisa ter no máximo 25 caracteres',
@@ -224,6 +228,7 @@ class UserController extends Controller
                 'cpf.unique' => 'Este CPF já está cadastado, faça login em sua conta!',
                 'nascimento.required' => 'O Nascimento é obrigatório',
                 'celular.required' => 'O Celular é obrigatório',
+                'celular.regex' => 'Celular inválido',
                 'email.required' => 'O Email é obrigatório',
                 'email.unique' => 'O Email já está cadastrado!',
                 'password.required' => 'A senha é obrigatório',
