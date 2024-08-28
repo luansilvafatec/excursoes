@@ -49,9 +49,9 @@ class UserController extends Controller
 
         $validated = $request->validate(
             [
-                'tipo' => 'required|integer|min:1|max:4',
-                'nome' => 'required|min:5|max:50',
-                'nomesocial' => 'nullable|min:3|max:50',
+                'tipo' => 'required|integer|min:1|max:5',
+                'nome' => 'required|min:5|max:100',
+                'nomesocial' => 'nullable|min:3|max:100',
                 'rg' => 'required|min:5|max:25',
                 'cpf' => ['required', 'unique:users,CPF', new Cpf()],
                 'celular' => ['required', 'regex:/^(?:(?:\+)?(55)\s?)?(?:\(?(?:[0-0]?([1-9]{1}[1-9]{1}))\)?\s?)([1-9](?:\s?\.?)\d{4}\-?\d{4})$/'],
@@ -63,9 +63,13 @@ class UserController extends Controller
             ],
             [
                 'tipo.required' => 'O relação com a fatec é obrigatório',
+                'tipo.integer' => 'O relação com a fatec invália',
+                'tipo.integer' => 'O relação com a fatec fora do esperado',
                 'nome.required' => 'O Nome é obrigatório',
                 'nome.min' => 'O Nome precisa ter no mínimo 3 caracteres',
-                'nome.max' => 'O Nome precisa ter no máximo 50 caracteres',
+                'nome.max' => 'O Nome precisa ter no máximo 100 caracteres',
+                'nomesocial.min' => 'O Nome Social precisa ter no mínimo 3 caracteres',
+                'nomesocial.max' => 'O Nome Social precisa ter no máximo 100 caracteres',
                 'rg.required' => 'O RG é obrigatório',
                 'rg.min' => 'O RG precisa ter no mínimo 5 caracteres',
                 'rg.max' => 'O RG precisa ter no máximo 25 caracteres',
@@ -123,9 +127,9 @@ class UserController extends Controller
     {
         $validated = $request->validate(
             [
-                'tipo' => 'required|integer|min:1|max:4',
-                'nome' => 'required|min:5|max:50',
-                'nomesocial' => 'nullable|min:3|max:50',
+                'tipo' => 'required|integer|min:1|max:5',
+                'nome' => 'required|min:5|max:100',
+                'nomesocial' => 'nullable|min:3|max:100',
                 'rg' => 'required|min:5|max:25',
                 'celular' => ['required', 'regex:/^(?:(?:\+)?(55)\s?)?(?:\(?(?:[0-0]?([1-9]{1}[1-9]{1}))\)?\s?)([1-9](?:\s?\.?)\d{4}\-?\d{4})$/'],
                 'curso' => 'nullable',
@@ -136,9 +140,13 @@ class UserController extends Controller
             ],
             [
                 'tipo.required' => 'O relação com a fatec é obrigatório',
+                'tipo.integer' => 'O relação com a fatec invália',
+                'tipo.integer' => 'O relação com a fatec fora do esperado',
                 'nome.required' => 'O Nome é obrigatório',
                 'nome.min' => 'O Nome precisa ter no mínimo 3 caracteres',
-                'nome.max' => 'O Nome precisa ter no máximo 50 caracteres',
+                'nome.max' => 'O Nome precisa ter no máximo 100 caracteres',
+                'nomesocial.min' => 'O Nome Social precisa ter no mínimo 3 caracteres',
+                'nomesocial.max' => 'O Nome Social precisa ter no máximo 100 caracteres',
                 'rg.required' => 'O RG é obrigatório',
                 'rg.min' => 'O RG precisa ter no mínimo 5 caracteres',
                 'rg.max' => 'O RG precisa ter no máximo 25 caracteres',
@@ -201,8 +209,8 @@ class UserController extends Controller
         $validated = $request->validate(
             [
                 'tipo' => 'required|integer|min:1|max:5',
-                'nome' => 'required|min:5|max:50',
-                'nomesocial' => 'nullable|min:3|max:50',
+                'nome' => 'required|min:5|max:100',
+                'nomesocial' => 'nullable|min:3|max:100',
                 'rg' => 'required|min:5|max:25',
                 'cpf' => ['required', 'unique:users,CPF', new Cpf()],
                 'celular' => ['required', 'regex:/^(?:(?:\+)?(55)\s?)?(?:\(?(?:[0-0]?([1-9]{1}[1-9]{1}))\)?\s?)([1-9](?:\s?\.?)\d{4}\-?\d{4})$/'],
@@ -218,9 +226,9 @@ class UserController extends Controller
                 'tipo.integer' => 'O relação com a fatec fora do esperado',
                 'nome.required' => 'O Nome é obrigatório',
                 'nome.min' => 'O Nome precisa ter no mínimo 3 caracteres',
-                'nome.max' => 'O Nome precisa ter no máximo 50 caracteres',
+                'nome.max' => 'O Nome precisa ter no máximo 100 caracteres',
                 'nomesocial.min' => 'O Nome Social precisa ter no mínimo 3 caracteres',
-                'nomesocial.max' => 'O Nome Social precisa ter no máximo 50 caracteres',
+                'nomesocial.max' => 'O Nome Social precisa ter no máximo 100 caracteres',
                 'rg.required' => 'O RG é obrigatório',
                 'rg.min' => 'O RG precisa ter no mínimo 5 caracteres',
                 'rg.max' => 'O RG precisa ter no máximo 25 caracteres',
