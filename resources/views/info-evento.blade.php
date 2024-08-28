@@ -129,19 +129,42 @@
                         </div>
                         <div class="rounded-3xl bg-[#283337]">
                             @guest
-                                <div class="flex flex-col p-6 text-white text-center items-center justify-center h-full">
-                                    <p class="text-2xl">Não perca essa oportunidade!</p>
+                                @if ($evento->possui_vagas)
+                                    <div
+                                        class="flex flex-col p-6 text-white text-center items-center justify-center h-full">
+                                        <p class="text-2xl">Não perca essa oportunidade!</p>
 
-                                    <p class="mt-4">Faça sua pré-reserva para participar. Estamos ansiosos para
-                                        compartilhar essa experiência incrível com você!</p>
+                                        <p class="mt-4">Faça sua pré-reserva para participar. Estamos ansiosos para
+                                            compartilhar essa experiência incrível com você!</p>
 
-                                    <p class="mt-4">Para efetuar sua pré-reserva, é necessário estar cadastrado no site.
-                                        Se já tem uma conta, basta fazer login. Caso contrário, cadastre-se agora mesmo!</p>
+                                        <p class="mt-4">Para efetuar sua pré-reserva, é necessário estar cadastrado no
+                                            site.
+                                            Se já tem uma conta, basta fazer login. Caso contrário, cadastre-se agora mesmo!
+                                        </p>
 
-                                    <a href="{{route('login')}}" class="mt-6 underline text-xl">Faça Login | Cadastre-se</a>
-                                </div>
+                                        <a href="{{ route('login') }}"
+                                            class="p-4 mt-6 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Faça Login |
+                                            Cadastre-se</a>
+                                    </div>
+                                @else
+                                    <div
+                                        class="flex flex-col p-6 text-white text-center items-center justify-center h-full">
+                                        <p class="text-2xl">As vagas acabaram!</p>
+
+                                        <p class="mt-4">Não fique triste, você ainda pode ter chances de ir! Entre para a lista de espera e te avisaremos caso surja alguma vaga.</p>
+
+                                        <p class="mt-4">Para entrar na espera, é necessário estar cadastrado no
+                                            site.
+                                            Se já tem uma conta, basta fazer login. Caso contrário, cadastre-se agora mesmo!
+                                        </p>
+
+                                        <a href="{{ route('login') }}"
+                                            class="p-4 mt-6 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Faça Login |
+                                            Cadastre-se</a>
+                                    </div>
+                                @endif
                             @else
-                                <livewire:card-pagamento :evento="$evento"/>
+                                <livewire:card-pagamento :evento="$evento" />
                             @endguest
                         </div>
                     </div>
@@ -149,5 +172,5 @@
             </div>
         </div>
     </div>
-    @livewireScripts
+
 </x-layout.layout-base>

@@ -27,8 +27,14 @@ class CardPagamento extends Component
             case 2:
                 $this->etapa = 4;
             break;
+            case 3:
+                $this->etapa = 7;
+            break;
             case 1:
                 $this->etapa = 5;
+            break;
+            case 0:
+                $this->etapa = 6;
             break;
 
             default:
@@ -53,6 +59,16 @@ class CardPagamento extends Component
         $this->limiteReserva = $this->user->ateReservaFormatado($this->evento);
 
         $this->etapa = 2;
+    }
+    public function aviseMe(){
+        $Passageiro = new Passageiro();
+        $Passageiro->user_id = $this->user->id;
+        $Passageiro->evento_id = $this->evento->id;
+        $Passageiro->espera = 1;
+
+        $Passageiro->save();
+
+        $this->etapa = 7;
     }
 
 

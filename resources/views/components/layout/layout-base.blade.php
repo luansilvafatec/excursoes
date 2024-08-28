@@ -85,7 +85,7 @@
     <main>
         {{ $slot }}
     </main>
-
+    @livewireScripts
     @vite('resources/js/app.js')
     {{ $script ?? '' }}
 </body>

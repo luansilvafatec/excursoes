@@ -1,6 +1,6 @@
 <div class=" p-6 text-white text-center h-full">
     @if ($etapa == 1)
-        <div class="flex flex-col items-center justify-center h-full">
+        <div id="1" wire:transition.scale.origin.top class="flex flex-col items-center justify-center h-full">
             <p class="text-2xl">Não perca essa oportunidade!</p>
 
             <p class="mt-4">Faça sua pré-reserva para participar. Estamos ansiosos para compartilhar essa experiência
@@ -10,9 +10,9 @@
                 reserva</button>
         </div>
     @elseif ($etapa == 2)
-        <div class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
-            x-data="{ show: false }" x-init="setTimeout(() => show = true, 200)"
-            x-bind:class="{ 'opacity-0 transform translate-y-10': !show, 'opacity-100 transform translate-y-0': show }">
+        <div id="2"
+            class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
+            wire:transition.scale.origin.top>
             <p class="text-2xl">Pré Reserva efetuada!</p>
 
             <p class="mt-4">Você tem até dia {{ $limiteReserva }} para efetuar o pagamento parcial ou integral para
@@ -24,9 +24,9 @@
                 PIX</button>
         </div>
     @elseif($etapa == 3)
-        <div class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
-            x-data="{ show: false }" x-init="setTimeout(() => show = true, 200)"
-            x-bind:class="{ 'opacity-0 transform translate-y-10': !show, 'opacity-100 transform translate-y-0': show }">
+        <div id="3"
+            class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
+            wire:transition.scale.origin.top>
             <p class="text-2xl">Pagamento com PIX!</p>
 
             <p class="mt-4">Você pode efetuar o pagamento total ou parcial do valor. O valor total deve ser pago até
@@ -88,20 +88,22 @@
 
         </div>
     @elseif ($etapa == 4)
-        <div class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
-            x-data="{ show: false }" x-init="setTimeout(() => show = true, 200)"
-            x-bind:class="{ 'opacity-0 transform translate-y-10': !show, 'opacity-100 transform translate-y-0': show }">
+        <div id="4"
+            class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
+            wire:transition.scale.origin.top>
             <p class="text-2xl">Você já pagou uma parte!</p>
             <p class="mt-4">Lembre-se de pagar o valor total até dia 20/09</p>
 
             <div class="my-4 w-full rounded-lg px-2 py-2 md:ml-5 text-left">
 
                 <p class="text-green-500 drop-shadow-md">Pago: R${{ $user->totalPagoEventoFormatado($evento) }}</p>
-                <p class="font-bold text-red-500 drop-shadow-md">Falta: R${{ $user->totalFaltaEventoFormatado($evento) }}
+                <p class="font-bold text-red-500 drop-shadow-md">Falta:
+                    R${{ $user->totalFaltaEventoFormatado($evento) }}
                 </p>
 
                 <div class="mb-4 h-2.5 w-full rounded-full bg-orange-300">
-                    <div class="h-2.5 rounded-full bg-emerald-500" style="width: {{ $user->totalPercentEvento($evento) }}%">
+                    <div class="h-2.5 rounded-full bg-emerald-500"
+                        style="width: {{ $user->totalPercentEvento($evento) }}%">
                     </div>
                 </div>
 
@@ -124,7 +126,8 @@
                                     <div
                                         class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-500">
                                     </div>
-                                    <p class="mb-1 text-sm font-normal text-gray-400">{{ $pagamento->data_hora_formatado }}
+                                    <p class="mb-1 text-sm font-normal text-gray-400">
+                                        {{ $pagamento->data_hora_formatado }}
                                     </p>
                                     <p class="text-sm font-normal text-gray-500">{{ $pagamento->meio_formatado }}</p>
                                     <h3 class="font-semibold text-green-800">R$ {{ $pagamento->valor_formatado }}</h3>
@@ -137,12 +140,34 @@
             <button wire:click="pagarPix" class="p-4 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pagar com
                 PIX</button>
         </div>
-
     @elseif ($etapa == 5)
-    <p class="text-2xl">Pagamento Confirmado!</p>
-    <p class="mt-4">Parabéns! Sua viagem está completamente quitada. Agora é só aguardar e se preparar para essa experiência incrível. Estamos ansiosos para compartilhar esses momentos com você!</p>
-    <p class="mt-4">Se precisar de mais alguma coisa, é só chamar o professor responsável!</p>
+        <p class="text-2xl">Pagamento Confirmado!</p>
+        <p class="mt-4">Parabéns! Sua viagem está completamente quitada. Agora é só aguardar e se preparar para essa
+            experiência incrível. Estamos ansiosos para compartilhar esses momentos com você!</p>
+        <p class="mt-4">Se precisar de mais alguma coisa, é só chamar o professor responsável!</p>
+    @elseif ($etapa == 6)
+        <div id="6"
+            class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
+            wire:transition.scale.origin.top>
+            <p class="text-2xl">As vagas acabaram!</p>
 
+            <p class="mt-4">Não fique triste, você ainda pode ter chances de ir! Entre para a lista de espera e te
+                avisaremos caso surja alguma vaga.</p>
+
+
+            <button wire:click="aviseMe" class="mt-10 p-4 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Avise-me!</button>
+        </div>
+    @elseif ($etapa == 7)
+        <div id="7"
+            class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
+            wire:transition.scale.origin.top>
+            <p class="text-2xl">Você esta na lista de espera!</p>
+
+            <p class="mt-4">Não fique triste, você ainda pode ter chances de ir!</p>
+            <p class="mt-10">Avisaremos assim que uma vaga aparecer!</p>
+
+
+        </div>
     @endif
 
 </div>
