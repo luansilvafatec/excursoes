@@ -1,4 +1,5 @@
 <x-layout.layout-base>
+    @livewireStyles
 
     <div class="bg-white">
         <div class="relative h-28 bg-black">
@@ -82,18 +83,71 @@
                     <div class="sticky top-0 grow max-w-lg m-auto">
                         <div class="flex w-full justify-center">
                             <div class="flex rounded-t-2xl bg-[#0396D8] px-6 py-3 text-center text-lg">
-                                @if ($evento->possui_vagas)
-                                    <span class="mr-1 font-bold">{{ $evento->vagas_disponiveis }}</span> vagas
-                                    disponíveis
+                                @if (Auth::check() && Auth::user()->statusEvento($evento) > 0)
+                                    <div class="">
+                                        <div class="flex space-x-1 items-center justify-center">
+                                            {{ Auth::user()->statusEventoFormatado($evento)[0] }}
+
+                                            <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                                                @mouseleave="tooltip = false">
+                                                <a>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                                    </svg>
+                                                </a>
+                                                <div class="absolute text-xs font-light text-gray-600 z-50 right-0 top-full min-w-[150px] origin-top-right -translate-x-0 rounded-es-lg border border-slate-200 bg-white p-2 shadow-xl"
+                                                    x-show="tooltip"
+                                                    x-transition:enter="transition ease-out duration-200 transform"
+                                                    x-transition:enter-start="opacity-0 -translate-y-2"
+                                                    x-transition:enter-end="opacity-100 translate-y-0"
+                                                    x-transition:leave="transition ease-out duration-200"
+                                                    x-transition:leave-start="opacity-100"
+                                                    x-transition:leave-end="opacity-0" x-cloak
+                                                    @focusout="await $nextTick();!$el.contains($focus.focused()) && (open = false)">
+                                                    {{ Auth::user()->statusEventoFormatado($evento)[1] }}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        @if (Auth::user()->statusEvento($evento) == 4)
+                                            <div class="text-xs font-light -m-2">Até
+                                                {{ Auth::user()->ateReservaFormatado($evento) }}</div>
+                                        @endif
+                                    </div>
                                 @else
-                                    <span class="mr-1 font-bold">ESGOTADO</span>
+                                    @if ($evento->possui_vagas)
+                                        <span class="mr-1 font-bold">{{ $evento->vagas_disponiveis }}</span> vagas
+                                        disponíveis
+                                    @else
+                                        <span class="mr-1 font-bold">ESGOTADO</span>
+                                    @endif
                                 @endif
                             </div>
                         </div>
-                        <div class="aspect-square rounded-3xl bg-[#283337]"></div>
+                        <div class="rounded-3xl bg-[#283337]">
+                            @guest
+                                <div class="flex flex-col p-6 text-white text-center items-center justify-center h-full">
+                                    <p class="text-2xl">Não perca essa oportunidade!</p>
+
+                                    <p class="mt-4">Faça sua pré-reserva para participar. Estamos ansiosos para
+                                        compartilhar essa experiência incrível com você!</p>
+
+                                    <p class="mt-4">Para efetuar sua pré-reserva, é necessário estar cadastrado no site.
+                                        Se já tem uma conta, basta fazer login. Caso contrário, cadastre-se agora mesmo!</p>
+
+                                    <a href="{{route('login')}}" class="mt-6 underline text-xl">Faça Login | Cadastre-se</a>
+                                </div>
+                            @else
+                                <livewire:card-pagamento :evento="$evento"/>
+                            @endguest
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @livewireScripts
 </x-layout.layout-base>

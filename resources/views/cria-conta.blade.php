@@ -27,8 +27,8 @@
                             <label for="senha" class="text-cinza_cadastro">Senha</label>
                             <div class="flex flex-col sm:flex-row items-center sm:items-start justify-center">
                                 <div class="w-full">
-                                    <input required class="base-input sm:rounded-r-none" type="password" name="password_login"
-                                        id="password_login" />
+                                    <input required class="base-input sm:rounded-r-none" type="password"
+                                        name="password_login" id="password_login" />
                                 </div>
                                 <button
                                     class="mt-2 sm:mt-0 rounded-md border-none bg-[#7CB342] p-2 px-4 font-bold text-white hover:bg-[#7CB000] sm:rounded-l-none"
@@ -76,12 +76,17 @@
                                 <div class="flex items-center space-x-1">
                                     <input required @click="tipo = 3" class="cursor-pointer" type="radio"
                                         name="tipo" value="3" id="tipo_3" />
-                                    <label class="cursor-pointer" for="tipo_3">Ex Aluno Fatec/ETEC</label>
+                                    <label class="cursor-pointer" for="tipo_3">Ex Aluno Fatec</label>
                                 </div>
                                 <div class="flex items-center space-x-1">
                                     <input required @click="tipo = 4" class="cursor-pointer" type="radio"
                                         name="tipo" value="4" id="tipo_4" />
-                                    <label class="cursor-pointer" for="tipo_4">Comunidade Externa</label>
+                                    <label class="cursor-pointer" for="tipo_4">Ex Aluno ETEC</label>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <input required @click="tipo = 5" class="cursor-pointer" type="radio"
+                                        name="tipo" value="5" id="tipo_5" />
+                                    <label class="cursor-pointer" for="tipo_5">Comunidade Externa</label>
                                 </div>
                             </div>
                         </div>
@@ -90,66 +95,97 @@
                     <div class="grid w-full grid-cols-6 gap-2 text-cinza_cadastro">
                         <div class="col-span-6">
                             <label for="nome">Nome completo*</label>
-                            <input name="nome" id="nome" value="{{ old('nome') }}"
-                                class="base-input"
+                            <input name="nome" id="nome" value="{{ old('nome') }}" class="base-input"
                                 type="text" required />
                         </div>
                         <div class="col-span-6 sm:col-span-4">
                             <label for="nomesocial">Nome social</label>
-                            <input name="nomesocial" id="nomesocial" value="{{ old('nomesocial') }}" class="base-input" type="text" />
+                            <input name="nomesocial" id="nomesocial" value="{{ old('nomesocial') }}"
+                                class="base-input" type="text" />
                         </div>
                         <div class="col-span-6 xs:col-span-3 sm:col-span-2">
                             <label for="nascimento">Nascimento*</label>
-                            <input name="nascimento" id="nascimento" value="{{ old('nascimento') }}" class="base-input" type="date" required min="1924-01-01" max="2010-12-31" />
+                            <input name="nascimento" id="nascimento" value="{{ old('nascimento') }}"
+                                class="base-input" type="date" required min="1924-01-01" max="2010-12-31" />
                         </div>
                         <span class="col-span-3 sm:hidden"></span>
                         <div class="col-span-6 xs:col-span-3">
                             <label for="rg">RG*</label>
-                            <input name="rg" id="rg" value="{{ old('rg') }}" class="base-input" type="text" required />
+                            <input name="rg" id="rg" value="{{ old('rg') }}" class="base-input"
+                                type="text" required />
                         </div>
                         <div class="col-span-6 xs:col-span-3">
                             <label for="cpf">CPF*</label>
-                            <input name="cpf" id="cpf" value="{{ old('cpf') }}" class="base-input" type="text"
-                                x-mask="999.999.999-99" required />
+                            <input name="cpf" id="cpf" value="{{ old('cpf') }}" class="base-input"
+                                type="text" x-mask="999.999.999-99" required />
                         </div>
                         <div class="col-span-6 sm:col-span-4">
                             <label for="email">E-mail*</label>
-                            <input name="email" id="email" value="{{ old('email') }}" class="base-input" type="email" required
+                            <input name="email" id="email" value="{{ old('email') }}" class="base-input"
+                                type="email" required
                                 class="invalid:border-pink-500 invalid:text-pink-600
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500" />
                         </div>
                         <div class="col-span-6 xs:col-span-3 sm:col-span-2">
                             <label for="celular">Celular*</label>
-                            <input name="celular" id="celular" value="{{ old('celular') }}" class="base-input" type="text"
-                                x-mask="(99)9 9999-9999" required />
+                            <input name="celular" id="celular" value="{{ old('celular') }}" class="base-input"
+                                type="text" x-mask="(99)9 9999-9999" required />
                         </div>
                         <span class="col-span-3 sm:hidden"></span>
-                        <div class="col-span-6 sm:col-span-4" x-show="tipo != 4">
+                        <div class="col-span-6 sm:col-span-4" x-show="tipo != 5">
                             <label class="" for="curso">Curso*</label>
-                            <select class="base-input" name="curso" value="{{ old('curso') }}" id="curso" required>
+                            <select class="base-input" name="curso" value="{{ old('curso') }}" id="curso"
+                                required>
                                 <option value="">Selecione</option>
-                                <option value="1">Jogos Digitais</option>
-                                <option value="2">ADS</option>
-                                <option value="3">Seg. Info.</option>
-                                <option value="4">Ciência de Dados</option>
-                                <option value="5">Agronegócio</option>
-                                <option value="6">AMS</option>
-                                <option value="7">Gestão</option>
+                                <option x-show="tipo==1 || tipo==3" value="1">Jogos Digitais</option>
+                                <option x-show="tipo==1 || tipo==3" value="2">ADS</option>
+                                <option x-show="tipo==1 || tipo==3" value="3">Seg. Info.</option>
+                                <option x-show="tipo==1 || tipo==3" value="4">Ciência de Dados</option>
+                                <option x-show="tipo==1 || tipo==3" value="5">Agronegócio</option>
+                                <option x-show="tipo==1 || tipo==3" value="6">AMS</option>
+                                <option x-show="tipo==1 || tipo==3" value="7">Gestão</option>
+                                <option x-show="tipo==2 || tipo==4" value="8">Mtec Informática para internet</option>
+                                <option x-show="tipo==2 || tipo==4" value="9">AMS</option>
+                                <option x-show="tipo==2 || tipo==4" value="10">EMIF Ciências Humanas e Sociais</option>
+                                <option x-show="tipo==2 || tipo==4" value="11">EMIF Linguagens e Suas Tecnologias</option>
+                                <option x-show="tipo==2 || tipo==4" value="12">MTec Administração</option>
+                                <option x-show="tipo==2 || tipo==4" value="13">Mtec Automação Industrial</option>
+                                <option x-show="tipo==2 || tipo==4" value="14">Mtec-PI Edificações</option>
+                                <option x-show="tipo==2 || tipo==4" value="15">Mtec Mecânica</option>
+                                <option x-show="tipo==2 || tipo==4" value="16">Mtec Meio Ambiente</option>
+                                <option x-show="tipo==2 || tipo==4" value="17">Técnico em Administração</option>
+                                <option x-show="tipo==2 || tipo==4" value="18">Técnico em Automação Industrial</option>
+                                <option x-show="tipo==2 || tipo==4" value="19">Técnico em Canto</option>
+                                <option x-show="tipo==2 || tipo==4" value="20">Técnico em desenvolvimento de Sistemas</option>
+                                <option x-show="tipo==2 || tipo==4" value="21">Técnico em Edificações</option>
+                                <option x-show="tipo==2 || tipo==4" value="22">Técnico em Eletrotécnica</option>
+                                <option x-show="tipo==2 || tipo==4" value="23">Técnico em Eletromecânica</option>
+                                <option x-show="tipo==2 || tipo==4" value="24">Técnico em Enfermagem</option>
+                                <option x-show="tipo==2 || tipo==4" value="25">Técnico em Informática para Internet</option>
+                                <option x-show="tipo==2 || tipo==4" value="26">Técnico em Logística</option>
+                                <option x-show="tipo==2 || tipo==4" value="27">Técnico em Mecânica</option>
+                                <option x-show="tipo==2 || tipo==4" value="28">Técnico em Recursos Humanos</option>
+                                <option x-show="tipo==2 || tipo==4" value="29">Técnico em Química</option>
+                                <option x-show="tipo==2 || tipo==4" value="30">Técnico em Segurança do Trabalho</option>
                             </select>
                         </div>
-                        <div class="col-span-6 xs:col-span-3 sm:col-span-2" x-show="tipo == 1">
-                            <label for="semestre" >Semestre*</label>
-                            <select class="base-input" name="semestre" id="semestre" value="{{ old('semestre') }}" required>
+                        <div class="col-span-6 xs:col-span-3 sm:col-span-2" x-show="tipo < 3">
+                            <label for="semestre">Semestre/Ano*</label>
+                            <select class="base-input" name="semestre" id="semestre" value="{{ old('semestre') }}"
+                                required>
                                 <option value="">Selecione</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
+                                <option x-show="tipo==1" value="1">1 semestre</option>
+                                <option x-show="tipo==1" value="2">2 semestre</option>
+                                <option x-show="tipo==1" value="3">3 semestre</option>
+                                <option x-show="tipo==1" value="4">4 semestre</option>
+                                <option x-show="tipo==1" value="5">5 semestre</option>
+                                <option x-show="tipo==1" value="6">6 semestre</option>
+                                <option x-show="tipo==2" value="7">1 ano/semestre</option>
+                                <option x-show="tipo==2" value="8">2 ano/semestre</option>
+                                <option x-show="tipo==2" value="9">3 ano/semestre</option>
                             </select>
                         </div>
-                        <span class="col-span-3 sm:hidden" x-show="tipo == 1"></span>
+                        <span class="col-span-3 sm:hidden" x-show="tipo < 3"></span>
                         <div class="col-span-6 xs:col-span-3">
                             <label for="password">Senha*</label>
                             <input name="password" id="password" class="base-input" type="password" required />

@@ -60,7 +60,16 @@ Route::get('/cpf/{value}', function ($value) {
     return true;
 });
 
-Route::view('/login', 'cria-conta')->name('login');
+
+Route::get('/login', function () {
+
+    if(Auth::check()){
+        return redirect()->route('minhas-excursoes');
+    }
+
+    return view('cria-conta');
+
+})->name('login');
 
 Route::post('/logar', function (Request $request) {
     // dd($request->all());
@@ -79,8 +88,8 @@ Route::post('/logar', function (Request $request) {
     }
 
     return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ])->onlyInput('email');
+        'email' => 'Usuário e senha não encontrados.',
+    ])->onlyInput('cpf');
 })->name('logar');
 
 Route::get('/logout', function (Request $request) {
@@ -109,4 +118,8 @@ Route::get('/excursao/{evento}', function (Evento $evento) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/minhas-excursoes', [UserController::class, 'minhasExcursoes'])->name('minhas-excursoes');
     Route::get('/meus-dados', [UserController::class, 'meusDados'])->name('meus-dados');
+
+
+    Route::get('/edita-usuario/{cpf?}', [UserController::class, 'editaUsuario'])->name('edita-usuario')->middleware([\App\Http\Middleware\Adminer::class]);
+    Route::post('/salva-usuario/{cpf?}', [UserController::class, 'salvaUsuario'])->name('salva-usuario')->middleware([\App\Http\Middleware\Adminer::class]);
 });

@@ -9,13 +9,12 @@
             <section>
                 <div class="flex items-center justify-center">
                     <span class="grow border border-black"></span>
-                    <h1 class="mx-4 text-center font-roboto text-xl leading-5 sm:text-2xl">Meus dados</h1>
+                    <h1 class="mx-4 text-center font-roboto text-xl leading-5 sm:text-2xl">Inserir/Editar Usuário</h1>
                     <span class="grow border border-black"></span>
                 </div>
-                <form class="mb-6 mt-3 flex flex-col items-center" x-data="{ tipo: {{$user->tipo}} }" id="formCadastro"
-                    action="{{ route('user.update', $user) }}" method="post">
+                <form class="mb-6 mt-3 flex flex-col items-center" x-data="{ tipo: {{$user->tipo??0}} }" id="formCadastro"
+                    action="{{ route('salva-usuario', $cpf) }}" method="post">
                     @csrf
-                    @method('PUT')
                     @if ($errors->any())
                         <div class="p-4 bg-red-100 text-red-700 font-bold w-full rounded-md border border-r-red-800">
                             <ul>
@@ -88,7 +87,7 @@
                         </div>
                         <div class="col-span-6 xs:col-span-3">
                             <label for="cpf">CPF*</label>
-                            <input disabled value="{{ old('cpf', $user->CPF) }}" class="base-input" type="text"
+                            <input value="{{ old('cpf', $user->CPF) }}" name="cpf" id="cpf" class="base-input" type="text"
                                 x-mask="999.999.999-99" required />
                         </div>
                         <div class="col-span-6 sm:col-span-4">

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 return [
 
     /*
@@ -26,7 +28,8 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    // 'env' => env('APP_ENV', 'production'),
+    'env' => 'production',
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +42,8 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    // 'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => false,
 
     /*
     |--------------------------------------------------------------------------

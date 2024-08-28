@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@alpinejs/mask": "^3.14.1",
+        "@ryangjchandler/alpine-clipboard": "^2.3.0",
         "alpinejs": "^3.14.1",
         "just-validate": "^4.3.0",
         "just-validate-plugin-date": "^1.2.0"

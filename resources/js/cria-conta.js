@@ -68,16 +68,52 @@ cadastro
     .addField('#semestre', [
         {
             rule: 'required',
-            errorMessage: 'Semestre é obrigatório',
+            errorMessage: 'Semestre/Ano é obrigatório',
         }
-    ])
-    .addField('#password', [
+    ]);
+
+const alterasenha = document.querySelector("#alterasenha");
+if (alterasenha) {
+    alterasenha.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            cadastro.addField('#password', [
+                {
+                    rule: 'required',
+                    errorMessage: 'Senha é obrigatório',
+                }
+            ]).addField('#confirmasenha', [
+                {
+                    rule: 'required',
+                    errorMessage: 'Confirmação de senha é obrigatório',
+                },
+                {
+                    validator: (value, fields) => {
+                        if (
+                            fields['#password'] &&
+                            fields['#password'].elem
+                        ) {
+                            const repeatPasswordValue =
+                                fields['#password'].elem.value;
+
+                            return value === repeatPasswordValue;
+                        }
+
+                        return true;
+                    },
+                    errorMessage: 'A confirmação deve ser igual a senha',
+                },
+            ]);
+        } else {
+            cadastro.removeField('#password');
+        }
+    });
+} else {
+    cadastro.addField('#password', [
         {
             rule: 'required',
             errorMessage: 'Senha é obrigatório',
         }
-    ])
-    .addField('#confirmasenha', [
+    ]).addField('#confirmasenha', [
         {
             rule: 'required',
             errorMessage: 'Confirmação de senha é obrigatório',
@@ -99,7 +135,7 @@ cadastro
             errorMessage: 'A confirmação deve ser igual a senha',
         },
     ]);
-
+}
 const cpf = document.querySelector("#cpf");
 if (cpf) {
     cadastro.addField('#cpf', [{
@@ -143,32 +179,37 @@ if (cpf) {
     }]);
 }
 
-document
-    .querySelector('#tipo')
-    .addEventListener('change', (e) => {
-        if (e.target.value < 3) {
-            cadastro.removeField('#semestre');
+const tipo = document.querySelector('#tipo');
+    tipo.addEventListener('change', (e) => {
+        if (e.target.value < 4) {
             cadastro.addField('#curso', [
                 {
                     rule: 'required',
                     errorMessage: 'Curso é obrigatório',
                 }
             ]);
-        } else if (e.target.value == 4) {
-            cadastro.removeField('#curso');
-            cadastro.removeField('#semestre');
         } else {
-            cadastro.addField('#curso', [
+            cadastro.removeField('#curso');
+        }
+        if (e.target.value < 3) {
+            cadastro.addField('#semestre', [
                 {
                     rule: 'required',
-                    errorMessage: 'Curso é obrigatório',
+                    errorMessage: 'Semestre/Ano é obrigatório',
                 }
-            ])
-                .addField('#semestre', [
-                    {
-                        rule: 'required',
-                        errorMessage: 'Semestre é obrigatório',
-                    }
-                ]);
+            ]);
+        } else {
+            cadastro.removeField('#semestre');
         }
     });
+
+window.onload = function () {
+    const event = new Event('change', { bubbles: true });
+    tipo.dispatchEvent(event);
+    if(cpf){
+        cpf.dispatchEvent(event);
+    }
+    if(alterasenha){
+        // alterasenha.dispatchEvent(event);
+    }
+}
