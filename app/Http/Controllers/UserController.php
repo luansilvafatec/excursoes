@@ -125,6 +125,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd($request);
         $validated = $request->validate(
             [
                 'tipo' => 'required|integer|min:1|max:5',
@@ -160,6 +161,7 @@ class UserController extends Controller
             ]
         );
 
+
         $user = User::find($id);
 
         $user->tipo = $validated['tipo'];
@@ -171,9 +173,13 @@ class UserController extends Controller
         $user->semestre = $validated['semestre'];
         $user->celular = preg_replace("/[^0-9]/", "", $validated['celular']);
         $user->email = $validated['email'];
-        $user->password = $validated['password'];
+        if($request->confirmasenha){
+            $user->password = $validated['password'];
+        }
 
         $user->save();
+
+        return redirect()->back()->with('sucesso', 'Dados atualizados com sucesso');
     }
 
     /**

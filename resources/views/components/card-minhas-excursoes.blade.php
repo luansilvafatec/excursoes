@@ -46,40 +46,57 @@
             </div>
         </div>
     </div>
-    <div class="my-4 grow rounded-lg bg-white bg-opacity-30 px-2 py-2 md:ml-5">
-        <p class="text-green-700 drop-shadow-md">Pago: R${{ $user->totalPagoEventoFormatado($evento) }}</p>
-        <p class="font-bold text-red-700 drop-shadow-md">Falta: R${{ $user->totalFaltaEventoFormatado($evento) }}</p>
+    @if ($user->statusEvento($evento) != 3)
+        <div class="my-4 grow rounded-lg bg-white bg-opacity-30 px-2 py-2 md:ml-5">
+            <p class="text-green-700 drop-shadow-md">Pago: R${{ $user->totalPagoEventoFormatado($evento) }}</p>
+            <p class="font-bold text-red-700 drop-shadow-md">Falta: R${{ $user->totalFaltaEventoFormatado($evento) }}
+            </p>
 
-        <div class="mb-4 h-2.5 w-full rounded-full bg-orange-300">
-            <div class="h-2.5 rounded-full bg-emerald-600" style="width: {{ $user->totalPercentEvento($evento) }}%">
+            <div class="mb-4 h-2.5 w-full rounded-full bg-orange-300">
+                <div class="h-2.5 rounded-full bg-emerald-600"
+                    style="width: {{ $user->totalPercentEvento($evento) }}%">
+                </div>
             </div>
-        </div>
 
-        <div>
-            Pagamentos
-            <div class="max-h-48 overflow-auto rounded bg-gray-200 mt-1">
-                <ol class="relative ml-2 border-s border-gray-500">
-                    @if ($user->pagamentoEvento($evento)->count() ==0)
-                    <div class="text-center text-sm">
-                        <p>Nenhum pagamento realizado 😢</p>
-                        <p>Não perca sua vaga! Realize o pagamento</p>
-                        <p>🚌🥳</p>
-
-                        <a class="underline font-semibold text-lg text-blue-700" href="{{route('evento',$evento)}}">Pagar</a>
-                    </div>
-                    @endif
-                    @foreach ($user->pagamentoEvento($evento) as $pagamento)
-                        <li class="mb-2 ms-4">
-                            <div
-                                class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-500">
+            <div class="flex flex-col">
+                Pagamentos
+                <div class="max-h-48 overflow-auto rounded bg-gray-200 mt-1">
+                    <ol class="relative ml-2 border-s border-gray-500">
+                        @if ($user->pagamentoEvento($evento)->count() == 0)
+                            <div class="text-center text-sm">
+                                <p>Nenhum pagamento realizado 😢</p>
+                                <p>Não perca sua vaga! Realize o pagamento</p>
+                                <p>🚌🥳</p>
                             </div>
-                            <p class="mb-1 text-sm font-normal text-gray-400">{{ $pagamento->data_hora_formatado }}</p>
-                            <p class="text-sm font-normal text-gray-500">{{ $pagamento->meio_formatado }}</p>
-                            <h3 class="font-semibold text-green-800">R$ {{ $pagamento->valor_formatado }}</h3>
-                        </li>
-                    @endforeach
-                </ol>
+                        @endif
+                        @foreach ($user->pagamentoEvento($evento) as $pagamento)
+                            <li class="mb-2 ms-4">
+                                <div
+                                    class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-500">
+                                </div>
+                                <p class="mb-1 text-sm font-normal text-gray-400">{{ $pagamento->data_hora_formatado }}
+                                </p>
+                                <p class="text-sm font-normal text-gray-500">{{ $pagamento->meio_formatado }}</p>
+                                <h3 class="font-semibold text-green-800">R$ {{ $pagamento->valor_formatado }}</h3>
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
+                @if ($user->statusEvento($evento) != 1)
+                    <a class="self-center p-1 mt-1 font-bold rounded-md my-auto bg-[#00897B]"
+                        href="{{ route('evento', $evento) }}">Pagar</a>
+                @else
+                    <div class="text-center">Tudo pago!<br> Aproveite sua viagem.</div>
+                @endif
             </div>
         </div>
+    @else
+    <div class="my-4 w-60 rounded-lg bg-white bg-opacity-30 px-2 py-2 mx-auto text-center">
+        <p class="text-2xl">Você esta na lista de espera!</p>
+
+            <p class="mt-4">Não fique triste, você ainda pode ter chances de ir!</p>
+            <p class="mt-10">Avisaremos assim que uma vaga aparecer!</p>
     </div>
+
+    @endif
 </div>

@@ -12,8 +12,13 @@
                     <h1 class="mx-4 text-center font-roboto text-xl leading-5 sm:text-2xl">Meus dados</h1>
                     <span class="grow border border-black"></span>
                 </div>
-                <form class="mb-6 mt-3 flex flex-col items-center" x-data="{ tipo: {{$user->tipo}} }" id="formCadastro"
+                <form class="mb-6 mt-3 flex flex-col items-center" x-data="{ tipo: {{ $user->tipo }} }" id="formCadastro"
                     action="{{ route('user.update', $user) }}" method="post">
+                    @if (session()->has('sucesso'))
+                        <div class="p-4 bg-green-100 text-green-700 font-bold w-full rounded-md border border-r-green-800">
+                            {{ session()->get('sucesso') }}
+                        </div>
+                    @endif
                     @csrf
                     @method('PUT')
                     @if ($errors->any())
@@ -72,8 +77,9 @@
                         </div>
                         <div class="col-span-6 sm:col-span-4">
                             <label for="nomesocial">Nome social</label>
-                            <input name="nomesocial" id="nomesocial" value="{{ old('nomesocial', $user->nomesocial) }}"
-                                class="base-input" type="text" />
+                            <input name="nomesocial" id="nomesocial"
+                                value="{{ old('nomesocial', $user->nome_social) }}" class="base-input"
+                                type="text" />
                         </div>
                         <div class="col-span-6 xs:col-span-3 sm:col-span-2">
                             <label for="nascimento">Nascimento*</label>
@@ -108,51 +114,115 @@
                             <label class="" for="curso">Curso*</label>
                             <select class="base-input" name="curso" id="curso" required>
                                 <option value="">Selecione</option>
-                                <option x-show="tipo==1 || tipo==3" value="1" {{ old('curso', $user->curso_id) == 1 ? 'selected' : '' }}>Jogos Digitais</option>
-                                <option x-show="tipo==1 || tipo==3" value="2" {{ old('curso', $user->curso_id) == 2 ? 'selected' : '' }}>ADS</option>
-                                <option x-show="tipo==1 || tipo==3" value="3" {{ old('curso', $user->curso_id) == 3 ? 'selected' : '' }}>Seg. Info.</option>
-                                <option x-show="tipo==1 || tipo==3" value="4" {{ old('curso', $user->curso_id) == 4 ? 'selected' : '' }}>Ciência de Dados</option>
-                                <option x-show="tipo==1 || tipo==3" value="5" {{ old('curso', $user->curso_id) == 5 ? 'selected' : '' }}>Agronegócio</option>
-                                <option x-show="tipo==1 || tipo==3" value="6" {{ old('curso', $user->curso_id) == 6 ? 'selected' : '' }}>AMS</option>
-                                <option x-show="tipo==1 || tipo==3" value="7" {{ old('curso', $user->curso_id) == 7 ? 'selected' : '' }}>Gestão</option>
-                                <option x-show="tipo==2 || tipo==4" value="8" {{ old('curso', $user->curso_id) == 8 ? 'selected' : '' }}>Mtec Informática para internet</option>
-                                <option x-show="tipo==2 || tipo==4" value="9" {{ old('curso', $user->curso_id) == 9 ? 'selected' : '' }}>AMS</option>
-                                <option x-show="tipo==2 || tipo==4" value="10" {{ old('curso', $user->curso_id) == 10 ? 'selected' : '' }}>EMIF Ciências Humanas e Sociais</option>
-                                <option x-show="tipo==2 || tipo==4" value="11" {{ old('curso', $user->curso_id) == 11 ? 'selected' : '' }}>EMIF Linguagens e Suas Tecnologias</option>
-                                <option x-show="tipo==2 || tipo==4" value="12" {{ old('curso', $user->curso_id) == 12 ? 'selected' : '' }}>MTec Administração</option>
-                                <option x-show="tipo==2 || tipo==4" value="13" {{ old('curso', $user->curso_id) == 13 ? 'selected' : '' }}>Mtec Automação Industrial</option>
-                                <option x-show="tipo==2 || tipo==4" value="14" {{ old('curso', $user->curso_id) == 14 ? 'selected' : '' }}>Mtec-PI Edificações</option>
-                                <option x-show="tipo==2 || tipo==4" value="15" {{ old('curso', $user->curso_id) == 15 ? 'selected' : '' }}>Mtec Mecânica</option>
-                                <option x-show="tipo==2 || tipo==4" value="16" {{ old('curso', $user->curso_id) == 16 ? 'selected' : '' }}>Mtec Meio Ambiente</option>
-                                <option x-show="tipo==2 || tipo==4" value="17" {{ old('curso', $user->curso_id) == 17 ? 'selected' : '' }}>Técnico em Administração</option>
-                                <option x-show="tipo==2 || tipo==4" value="18" {{ old('curso', $user->curso_id) == 18 ? 'selected' : '' }}>Técnico em Automação Industrial</option>
-                                <option x-show="tipo==2 || tipo==4" value="19" {{ old('curso', $user->curso_id) == 19 ? 'selected' : '' }}>Técnico em Canto</option>
-                                <option x-show="tipo==2 || tipo==4" value="20" {{ old('curso', $user->curso_id) == 20 ? 'selected' : '' }}>Técnico em desenvolvimento de Sistemas</option>
-                                <option x-show="tipo==2 || tipo==4" value="21" {{ old('curso', $user->curso_id) == 21 ? 'selected' : '' }}>Técnico em Edificações</option>
-                                <option x-show="tipo==2 || tipo==4" value="22" {{ old('curso', $user->curso_id) == 22 ? 'selected' : '' }}>Técnico em Eletrotécnica</option>
-                                <option x-show="tipo==2 || tipo==4" value="23" {{ old('curso', $user->curso_id) == 23 ? 'selected' : '' }}>Técnico em Eletromecânica</option>
-                                <option x-show="tipo==2 || tipo==4" value="24" {{ old('curso', $user->curso_id) == 24 ? 'selected' : '' }}>Técnico em Enfermagem</option>
-                                <option x-show="tipo==2 || tipo==4" value="25" {{ old('curso', $user->curso_id) == 25 ? 'selected' : '' }}>Técnico em Informática para Internet</option>
-                                <option x-show="tipo==2 || tipo==4" value="26" {{ old('curso', $user->curso_id) == 26 ? 'selected' : '' }}>Técnico em Logística</option>
-                                <option x-show="tipo==2 || tipo==4" value="27" {{ old('curso', $user->curso_id) == 27 ? 'selected' : '' }}>Técnico em Mecânica</option>
-                                <option x-show="tipo==2 || tipo==4" value="28" {{ old('curso', $user->curso_id) == 28 ? 'selected' : '' }}>Técnico em Recursos Humanos</option>
-                                <option x-show="tipo==2 || tipo==4" value="29" {{ old('curso', $user->curso_id) == 29 ? 'selected' : '' }}>Técnico em Química</option>
-                                <option x-show="tipo==2 || tipo==4" value="30" {{ old('curso', $user->curso_id) == 30 ? 'selected' : '' }}>Técnico em Segurança do Trabalho</option>
+                                <option x-show="tipo==1 || tipo==3" value="1"
+                                    {{ old('curso', $user->curso_id) == 1 ? 'selected' : '' }}>Jogos Digitais</option>
+                                <option x-show="tipo==1 || tipo==3" value="2"
+                                    {{ old('curso', $user->curso_id) == 2 ? 'selected' : '' }}>ADS</option>
+                                <option x-show="tipo==1 || tipo==3" value="3"
+                                    {{ old('curso', $user->curso_id) == 3 ? 'selected' : '' }}>Seg. Info.</option>
+                                <option x-show="tipo==1 || tipo==3" value="4"
+                                    {{ old('curso', $user->curso_id) == 4 ? 'selected' : '' }}>Ciência de Dados
+                                </option>
+                                <option x-show="tipo==1 || tipo==3" value="5"
+                                    {{ old('curso', $user->curso_id) == 5 ? 'selected' : '' }}>Agronegócio</option>
+                                <option x-show="tipo==1 || tipo==3" value="6"
+                                    {{ old('curso', $user->curso_id) == 6 ? 'selected' : '' }}>AMS</option>
+                                <option x-show="tipo==1 || tipo==3" value="7"
+                                    {{ old('curso', $user->curso_id) == 7 ? 'selected' : '' }}>Gestão</option>
+                                <option x-show="tipo==2 || tipo==4" value="8"
+                                    {{ old('curso', $user->curso_id) == 8 ? 'selected' : '' }}>Mtec Informática para
+                                    internet</option>
+                                <option x-show="tipo==2 || tipo==4" value="9"
+                                    {{ old('curso', $user->curso_id) == 9 ? 'selected' : '' }}>AMS</option>
+                                <option x-show="tipo==2 || tipo==4" value="10"
+                                    {{ old('curso', $user->curso_id) == 10 ? 'selected' : '' }}>EMIF Ciências Humanas e
+                                    Sociais</option>
+                                <option x-show="tipo==2 || tipo==4" value="11"
+                                    {{ old('curso', $user->curso_id) == 11 ? 'selected' : '' }}>EMIF Linguagens e Suas
+                                    Tecnologias</option>
+                                <option x-show="tipo==2 || tipo==4" value="12"
+                                    {{ old('curso', $user->curso_id) == 12 ? 'selected' : '' }}>MTec Administração
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="13"
+                                    {{ old('curso', $user->curso_id) == 13 ? 'selected' : '' }}>Mtec Automação
+                                    Industrial</option>
+                                <option x-show="tipo==2 || tipo==4" value="14"
+                                    {{ old('curso', $user->curso_id) == 14 ? 'selected' : '' }}>Mtec-PI Edificações
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="15"
+                                    {{ old('curso', $user->curso_id) == 15 ? 'selected' : '' }}>Mtec Mecânica</option>
+                                <option x-show="tipo==2 || tipo==4" value="16"
+                                    {{ old('curso', $user->curso_id) == 16 ? 'selected' : '' }}>Mtec Meio Ambiente
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="17"
+                                    {{ old('curso', $user->curso_id) == 17 ? 'selected' : '' }}>Técnico em
+                                    Administração</option>
+                                <option x-show="tipo==2 || tipo==4" value="18"
+                                    {{ old('curso', $user->curso_id) == 18 ? 'selected' : '' }}>Técnico em Automação
+                                    Industrial</option>
+                                <option x-show="tipo==2 || tipo==4" value="19"
+                                    {{ old('curso', $user->curso_id) == 19 ? 'selected' : '' }}>Técnico em Canto
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="20"
+                                    {{ old('curso', $user->curso_id) == 20 ? 'selected' : '' }}>Técnico em
+                                    desenvolvimento de Sistemas</option>
+                                <option x-show="tipo==2 || tipo==4" value="21"
+                                    {{ old('curso', $user->curso_id) == 21 ? 'selected' : '' }}>Técnico em Edificações
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="22"
+                                    {{ old('curso', $user->curso_id) == 22 ? 'selected' : '' }}>Técnico em
+                                    Eletrotécnica</option>
+                                <option x-show="tipo==2 || tipo==4" value="23"
+                                    {{ old('curso', $user->curso_id) == 23 ? 'selected' : '' }}>Técnico em
+                                    Eletromecânica</option>
+                                <option x-show="tipo==2 || tipo==4" value="24"
+                                    {{ old('curso', $user->curso_id) == 24 ? 'selected' : '' }}>Técnico em Enfermagem
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="25"
+                                    {{ old('curso', $user->curso_id) == 25 ? 'selected' : '' }}>Técnico em Informática
+                                    para Internet</option>
+                                <option x-show="tipo==2 || tipo==4" value="26"
+                                    {{ old('curso', $user->curso_id) == 26 ? 'selected' : '' }}>Técnico em Logística
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="27"
+                                    {{ old('curso', $user->curso_id) == 27 ? 'selected' : '' }}>Técnico em Mecânica
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="28"
+                                    {{ old('curso', $user->curso_id) == 28 ? 'selected' : '' }}>Técnico em Recursos
+                                    Humanos</option>
+                                <option x-show="tipo==2 || tipo==4" value="29"
+                                    {{ old('curso', $user->curso_id) == 29 ? 'selected' : '' }}>Técnico em Química
+                                </option>
+                                <option x-show="tipo==2 || tipo==4" value="30"
+                                    {{ old('curso', $user->curso_id) == 30 ? 'selected' : '' }}>Técnico em Segurança do
+                                    Trabalho</option>
                             </select>
                         </div>
                         <div class="col-span-6 xs:col-span-3 sm:col-span-2" x-show="tipo < 3">
                             <label for="semestre">Semestre/ano*</label>
                             <select class="base-input" name="semestre" id="semestre" required>
                                 <option value="">Selecione</option>
-                                <option x-show="tipo==1" value="1" {{ old('semestre', $user->semestre) == 1 ? 'selected' : '' }}>1 Semestre</option>
-                                <option x-show="tipo==1" value="2" {{ old('semestre', $user->semestre) == 2 ? 'selected' : '' }}>2 Semestre</option>
-                                <option x-show="tipo==1" value="3" {{ old('semestre', $user->semestre) == 3 ? 'selected' : '' }}>3 Semestre</option>
-                                <option x-show="tipo==1" value="4" {{ old('semestre', $user->semestre) == 4 ? 'selected' : '' }}>4 Semestre</option>
-                                <option x-show="tipo==1" value="5" {{ old('semestre', $user->semestre) == 5 ? 'selected' : '' }}>5 Semestre</option>
-                                <option x-show="tipo==1" value="6" {{ old('semestre', $user->semestre) == 6 ? 'selected' : '' }}>6 Semestre</option>
-                                <option x-show="tipo==2" value="7" {{ old('semestre', $user->semestre) == 7 ? 'selected' : '' }}>1 Semestre/ano</option>
-                                <option x-show="tipo==2" value="8" {{ old('semestre', $user->semestre) == 8 ? 'selected' : '' }}>2 Semestre/ano</option>
-                                <option x-show="tipo==2" value="9" {{ old('semestre', $user->semestre) == 9 ? 'selected' : '' }}>3 Semestre/ano</option>
+                                <option x-show="tipo==1" value="1"
+                                    {{ old('semestre', $user->semestre) == 1 ? 'selected' : '' }}>1 Semestre</option>
+                                <option x-show="tipo==1" value="2"
+                                    {{ old('semestre', $user->semestre) == 2 ? 'selected' : '' }}>2 Semestre</option>
+                                <option x-show="tipo==1" value="3"
+                                    {{ old('semestre', $user->semestre) == 3 ? 'selected' : '' }}>3 Semestre</option>
+                                <option x-show="tipo==1" value="4"
+                                    {{ old('semestre', $user->semestre) == 4 ? 'selected' : '' }}>4 Semestre</option>
+                                <option x-show="tipo==1" value="5"
+                                    {{ old('semestre', $user->semestre) == 5 ? 'selected' : '' }}>5 Semestre</option>
+                                <option x-show="tipo==1" value="6"
+                                    {{ old('semestre', $user->semestre) == 6 ? 'selected' : '' }}>6 Semestre</option>
+                                <option x-show="tipo==2" value="7"
+                                    {{ old('semestre', $user->semestre) == 7 ? 'selected' : '' }}>1 Semestre/ano
+                                </option>
+                                <option x-show="tipo==2" value="8"
+                                    {{ old('semestre', $user->semestre) == 8 ? 'selected' : '' }}>2 Semestre/ano
+                                </option>
+                                <option x-show="tipo==2" value="9"
+                                    {{ old('semestre', $user->semestre) == 9 ? 'selected' : '' }}>3 Semestre/ano
+                                </option>
                             </select>
                         </div>
                         <span class="col-span-3 sm:hidden" x-show="tipo < 3"></span>

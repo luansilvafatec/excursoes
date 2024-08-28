@@ -105,6 +105,7 @@ if (alterasenha) {
             ]);
         } else {
             cadastro.removeField('#password');
+            cadastro.removeField('#confirmasenha');
         }
     });
 } else {
