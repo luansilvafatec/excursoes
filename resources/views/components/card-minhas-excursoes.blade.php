@@ -49,6 +49,9 @@
     @if ($user->statusEvento($evento) != 3)
         <div class="my-4 grow rounded-lg bg-white bg-opacity-30 px-2 py-2 md:ml-5">
             <p class="text-green-700 drop-shadow-md">Pago: R${{ $user->totalPagoEventoFormatado($evento) }}</p>
+            @if ($user->totalDescontoEvento($evento) > 0)
+                <p class="text-orange-600 drop-shadow-md">Desconto: R${{ $user->totalDescontoEventoFormatado($evento) }}</p>
+            @endif
             <p class="font-bold text-red-700 drop-shadow-md">Falta: R${{ $user->totalFaltaEventoFormatado($evento) }}
             </p>
 
@@ -91,12 +94,12 @@
             </div>
         </div>
     @else
-    <div class="my-4 w-60 rounded-lg bg-white bg-opacity-30 px-2 py-2 mx-auto text-center">
-        <p class="text-2xl">Você esta na lista de espera!</p>
+        <div class="my-4 w-60 rounded-lg bg-white bg-opacity-30 px-2 py-2 mx-auto text-center">
+            <p class="text-2xl">Você esta na lista de espera!</p>
 
             <p class="mt-4">Não fique triste, você ainda pode ter chances de ir!</p>
             <p class="mt-10">Avisaremos assim que uma vaga aparecer!</p>
-    </div>
+        </div>
 
     @endif
 </div>

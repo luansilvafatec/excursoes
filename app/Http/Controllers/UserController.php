@@ -223,7 +223,7 @@ class UserController extends Controller
                 'curso' => 'nullable',
                 'semestre' => 'nullable',
                 'nascimento' => ['required'],
-                'email' => ['required', Rule::unique('users')->ignore(Auth::id())],
+                'email' => ['required'],
                 'password' => ['required_if:alterasenha,1'],
             ],
             [
@@ -268,7 +268,9 @@ class UserController extends Controller
         $user->semestre = $validated['semestre'];
         $user->celular = preg_replace("/[^0-9]/", "", $validated['celular']);
         $user->email = $validated['email'];
-        $user->password = $validated['password'];
+         if($request->confirmasenha){
+            $user->password = $validated['password'];
+        }
 
         $user->save();
 

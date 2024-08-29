@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Evento::class);
             $table->boolean('espera')->default(false);
+            $table->float('desconto')->default(0);
             $table->timestamps();
         });
     }

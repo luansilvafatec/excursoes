@@ -58,6 +58,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Passageiro::class);
     }
+    public function passageiroEvento(Evento $evento)
+    {
+        return $this->passageiros()->where("evento_id", $evento->id)->first();
+    }
     public function esperaEvento(Evento $evento)
     {
         return $this->passageiros()->select('espera')->where("evento_id", $evento->id)->first()->espera;
@@ -77,17 +81,29 @@ class User extends Authenticatable
     {
         return $this->pagamentos()->where("evento_id", $evento->id)->sum('valor');
     }
+    public function totalPagoDescontoEvento(Evento $evento)
+    {
+        return $this->pagamentos()->where("evento_id", $evento->id)->sum('valor') + $this->totalDescontoEvento($evento);
+    }
+    public function totalDescontoEvento(Evento $evento)
+    {
+        return $this->passageiroEvento($evento)->desconto;
+    }
     public function totalFaltaEvento(Evento $evento)
     {
-        return $evento->valor - $this->totalPagoEvento($evento);
+        return $evento->valor - $this->totalPagoDescontoEvento($evento);
     }
     public function totalPercentEvento(Evento $evento)
     {
-        return $this->totalPagoEvento($evento) / $evento->valor * 100;
+        return $this->totalPagoDescontoEvento($evento) / $evento->valor * 100;
     }
     public function totalPagoEventoFormatado(Evento $evento)
     {
         return number_format($this->TotalPagoEvento($evento), 2, ',', '.');
+    }
+    public function totalDescontoEventoFormatado(Evento $evento)
+    {
+        return number_format($this->totalDescontoEvento($evento), 2, ',', '.');
     }
     public function totalFaltaEventoFormatado(Evento $evento)
     {
@@ -100,7 +116,7 @@ class User extends Authenticatable
             return 0;
         }
 
-        if ($this->totalPagoEvento($evento) >= $evento->valor) {
+        if ($this->totalPagoDescontoEvento($evento) >= $evento->valor) {
             return 1;
         }
         if ($this->totalPagoEvento($evento) > 0) {
