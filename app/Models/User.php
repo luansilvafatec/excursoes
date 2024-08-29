@@ -89,6 +89,10 @@ class User extends Authenticatable
     {
         return $this->passageiroEvento($evento)->desconto;
     }
+    public function possuiDescontoTotal(Evento $evento)
+    {
+        return $this->passageiroEvento($evento)->desconto >= $evento->valor;
+    }
     public function totalFaltaEvento(Evento $evento)
     {
         return $evento->valor - $this->totalPagoDescontoEvento($evento);

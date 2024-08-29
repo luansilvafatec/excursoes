@@ -62,13 +62,15 @@
             </div>
 
             <div class="flex flex-col">
+                @if (!$user->possuiDescontoTotal($evento))
                 Pagamentos
                 <div class="max-h-48 overflow-auto rounded bg-gray-200 mt-1">
                     <ol class="relative ml-2 border-s border-gray-500">
                         @if ($user->pagamentoEvento($evento)->count() == 0)
                             <div class="text-center text-sm">
                                 <p>Nenhum pagamento realizado 😢</p>
-                                <p>Não perca sua vaga! Realize o pagamento</p>
+                                <p>Não perca sua vaga!</p>
+                                <p>Pague no mínimo R${{$evento->pagamento_minimo}} e garanta sua vaga</p>
                                 <p>🚌🥳</p>
                             </div>
                         @endif
@@ -85,6 +87,7 @@
                         @endforeach
                     </ol>
                 </div>
+                @endif
                 @if ($user->statusEvento($evento) != 1)
                     <a class="self-center p-1 mt-1 font-bold rounded-md my-auto bg-[#00897B]"
                         href="{{ route('evento', $evento) }}">Pagar</a>
