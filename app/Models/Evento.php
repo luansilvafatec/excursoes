@@ -66,7 +66,7 @@ class Evento extends Model
 
     //realizaram a pré reserva
     public function interessados() {
-        return $this->passageiros()->whereDoesntHave('pagamentos');
+        return $this->passageiros()->whereDoesntHave('pagamentos')->where('desconto','<',$this->valor);
     }
     public function getInteressadosAtribute(){
         return $this->interessados();
@@ -74,7 +74,7 @@ class Evento extends Model
 
     public function confirmados() {
         return $this->passageiros()->get()->filter(function ($passageiro) {
-            return $passageiro->total_pago >= $this->valor;
+            return $passageiro->total_pago_desconto >= $this->valor;
         });
     }
     public function getConfirmadosAttribute(){
@@ -83,7 +83,7 @@ class Evento extends Model
 
     public function parciais() {
         return $this->passageiros()->get()->filter(function ($passageiro) {
-            return $passageiro->total_pago > 0 && $passageiro->total_pago < $this->valor;
+            return $passageiro->total_pago_desconto > 0 && $passageiro->total_pago_desconto < $this->valor;
         });
     }
 

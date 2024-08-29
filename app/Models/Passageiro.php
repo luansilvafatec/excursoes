@@ -23,4 +23,8 @@ class Passageiro extends Model
     {
         return $this->pagamentos()->sum('valor');
     }
+    public function getTotalPagoDescontoAttribute()
+    {
+        return $this->pagamentos()->sum('valor') + $this->desconto;
+    }
 }
