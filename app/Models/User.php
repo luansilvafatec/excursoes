@@ -95,7 +95,7 @@ class User extends Authenticatable
     }
     public function totalPercentEvento(Evento $evento)
     {
-        return $this->totalPagoDescontoEvento($evento) / $evento->valor * 100;
+        return $this->totalPagoEvento($evento) / ($evento->valor - $this->totalDescontoEvento($evento)) * 100;
     }
     public function totalPagoEventoFormatado(Evento $evento)
     {
