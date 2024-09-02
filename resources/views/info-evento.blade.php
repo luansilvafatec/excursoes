@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="jus my-4 flex items-center">
-                        <img class="rounded-full" src="https://via.placeholder.com/150x150" alt="imagem"
+                        <img class="rounded-full" src="{{ asset('img/imagemExcursao.jpg') }}" alt="imagem"
                             width="150" height="150" />
                         <div class="ml-8">
                             <div class="font-bold">Professor responsável</div>
