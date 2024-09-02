@@ -59,6 +59,8 @@
                                 </div>
                             </div>
                         </div>
+                        <p class="mt-2">O valor total deve ser pago até
+                            dia <span class="font-bold">20/09</span></p>
                         <div class="pt-5 text-start">
                             <div class="mb-2 border-t font-bold">Horários</div>
                             <div class="leading-4">

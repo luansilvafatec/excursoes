@@ -15,8 +15,12 @@
             wire:transition.scale.origin.top>
             <p class="text-2xl">Pré Reserva efetuada!</p>
 
-            <p class="mt-4">Você tem até dia {{ $limiteReserva }} para pagar no mínimo R${{$evento->pagamento_minimo}} e
-                 garantir sua vaga.</p>
+            <p class="mt-4">Você tem até dia {{ $limiteReserva }} para pagar no mínimo
+                R${{ $evento->pagamento_minimo }} e
+                garantir sua vaga.</p>
+
+            <p class="mt-6">Atenção!! O valor total deve ser pago até
+                dia 20/09</p>
 
             <button wire:click="pagarPix" class="p-4 mt-10 font-bold text-2xl rounded-md my-auto bg-[#00897B]">Pagar com
                 PIX</button>

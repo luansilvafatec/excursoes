@@ -70,7 +70,7 @@ class User extends Authenticatable
     public function pagamentos(): HasManyThrough
     {
         //return $this->hasManyThrough(Pagamento::class, Passageiro::class);
-        return $this->through('passageiros')->has('pagamentos');
+        return $this->through('passageiros')->has('pagamentos')->orderBy("id", "desc");
     }
 
     public function pagamentoEvento(Evento $evento)
@@ -188,5 +188,46 @@ class User extends Authenticatable
 
         // Retorna null se nenhum nome estiver disponível
         return null;
+    }
+    public function getNomeFormatadoAttribute()
+    {
+        // Obtém o valor do campo 'nome_social', se não estiver vazio, retorna o primeiro nome
+        if (!empty($this->attributes['nome_social'])) {
+            return $this->attributes['nome_social'];
+        }
+
+        // Se 'nome_social' estiver vazio, tenta o campo 'nome'
+        if (!empty($this->attributes['nome'])) {
+            return $this->attributes['nome'];
+        }
+
+        // Retorna null se nenhum nome estiver disponível
+        return null;
+    }
+
+    public function getTipoFormatadoAttribute(){
+
+        switch ($this->tipo) {
+            case 1:
+                return "Aluno Fatec";
+            break;
+            case 2:
+                return "Aluno ETEC";
+            break;
+            case 3:
+                return "Ex-Aluno Fatec";
+            break;
+            case 4:
+                return "Ex-Aluno ETEC";
+            break;
+            case 5:
+                return "Comunidade Externa";
+            break;
+
+            default:
+                return "Inválido";
+            break;
+        }
+
     }
 }

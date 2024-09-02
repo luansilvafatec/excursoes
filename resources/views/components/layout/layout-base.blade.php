@@ -15,20 +15,24 @@
 <body class="min-h-screen bg-[#DDE4E7]">
     <header class="items-center justify-between bg-[#C21D16] p-4">
         <div class="flex w-full justify-between border-b pb-1 text-white">
-            <div class="mx-auto text-center leading-4 sm:m-0">Olá,
-                {{ Auth()->user()->primeiro_nome ?? 'seja bem vindo(a)!' }}</div>
-            <a href="mailto:luan@fatecourinhos.edu.br" class="hidden sm:flex">
+            <div class="mx-auto text-center leading-4 sm:m-0 pb-2">Seja bem vindo(a)!</div>
+            <div class="mx-auto text-center leading-4 sm:m-0">
+                @auth
+                    Olá, {{ Auth()->user()->primeiro_nome ?? '' }}
+                @endauth
+            </div>
+            {{-- <a href="mailto:luan@fatecourinhos.edu.br" class="hidden sm:flex">
                 <svg class="mr-1 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <path
                         d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                 </svg>
                 <span>luan@fatecourinhos.edu.br</span>
-            </a>
+            </a> --}}
         </div>
         <div class="mt-2 flex items-center justify-between">
-            <a href="{{route('home')}}">
-            <img class="w-24" src="https://www.fatecourinhos.edu.br/static/cps/brand/fatec/logo-light.svg"
-                alt="" /></a>
+            <a href="{{ route('home') }}">
+                <img class="w-24" src="https://www.fatecourinhos.edu.br/static/cps/brand/fatec/logo-light.svg"
+                    alt="" /></a>
             @auth
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                     <a class="flex font-bold text-white" href="#">
@@ -48,15 +52,18 @@
                         x-transition:leave-end="opacity-0" x-cloak
                         @focusout="await $nextTick();!$el.contains($focus.focused()) && (open = false)">
                         <li>
-                            <a  class="flex items-center p-2 text-slate-800 hover:bg-slate-50" href="{{route('meus-dados')}}"> Meus dados
+                            <a class="flex items-center p-2 text-slate-800 hover:bg-slate-50"
+                                href="{{ route('meus-dados') }}"> Meus dados
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center p-2 text-slate-800 hover:bg-slate-50" href="{{route('minhas-excursoes')}}"> Minhas
+                            <a class="flex items-center p-2 text-slate-800 hover:bg-slate-50"
+                                href="{{ route('minhas-excursoes') }}"> Minhas
                                 excursões </a>
                         </li>
                         <li>
-                            <a class="flex items-center space-x-2 p-2 text-slate-800 hover:bg-slate-50" href="{{route('logout')}}">
+                            <a class="flex items-center space-x-2 p-2 text-slate-800 hover:bg-slate-50"
+                                href="{{ route('logout') }}">
                                 <span>Sair</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-6 stroke-current">
@@ -68,7 +75,7 @@
                     </ul>
                 </div>
             @else
-                <a class="flex font-bold text-white" href="{{route('login')}}">
+                <a class="flex font-bold text-white" href="{{ route('login') }}">
                     <div class="mr-1 -rotate-12 rounded-full border p-1">
                         <svg class="w-6 fill-current xs:w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                             <path

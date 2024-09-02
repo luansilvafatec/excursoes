@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DeployController;
 use App\Http\Controllers\UserController;
+use App\Livewire\GestaoExcursao;
 use Illuminate\Support\Facades\Route;
 use App\Models\Evento;
 use App\Models\User;
@@ -126,7 +127,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/edita-usuario/{cpf?}', [UserController::class, 'editaUsuario'])->name('edita-usuario')->middleware([\App\Http\Middleware\Adminer::class]);
     Route::post('/salva-usuario/{cpf?}', [UserController::class, 'salvaUsuario'])->name('salva-usuario')->middleware([\App\Http\Middleware\Adminer::class]);
+    Route::get('/gestao-excursao/{evento}', GestaoExcursao::class)->middleware([\App\Http\Middleware\Adminer::class]);
 });
+
 
 Route::get('mercado-pago', function () {
 
