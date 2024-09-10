@@ -70,7 +70,8 @@
                             <div class="text-center text-sm">
                                 <p>Nenhum pagamento realizado 😢</p>
                                 <p>Não perca sua vaga!</p>
-                                <p>Pague no mínimo R${{$evento->pagamento_minimo}} e garanta sua vaga</p>
+                                {{-- <p>Pague no mínimo R${{$evento->pagamento_minimo}} e garanta sua vaga</p> --}}
+                                <p>Realize o pagamento de sua viagem e viva momentos inesquecíveis</p>
                                 <p>🚌🥳</p>
                             </div>
                         @endif

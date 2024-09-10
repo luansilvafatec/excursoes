@@ -15,9 +15,7 @@
             wire:transition.scale.origin.top>
             <p class="text-2xl">Pré Reserva efetuada!</p>
 
-            <p class="mt-4">Você tem até dia {{ $limiteReserva }} para pagar no mínimo
-                R${{ $evento->pagamento_minimo }} e
-                garantir sua vaga.</p>
+            {{-- <p class="mt-4">Você tem até dia {{ $limiteReserva }} para pagar no mínimo R${{ $evento->pagamento_minimo }} e garantir sua vaga.</p> --}}
 
             <p class="mt-6">Atenção!! O valor total deve ser pago até
                 dia 20/09</p>
@@ -31,7 +29,7 @@
             wire:transition.scale.origin.top>
             <p class="text-2xl">Pagamento com PIX!</p>
 
-            <p class="mt-4">Você pode efetuar o pagamento total ou parcial do valor. O valor total deve ser pago até
+            <p class="mt-4">O valor total deve ser pago até
                 dia 20/09</p>
 
             <p class="mt-4">Realize o pagamento efetuando um PIX para:</p>
