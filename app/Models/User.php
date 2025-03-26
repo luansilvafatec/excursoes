@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function eventos(): BelongsToMany
     {
-        return $this->belongsToMany(Evento::class, 'passageiros', 'user_id', 'evento_id');
+        return $this->belongsToMany(Evento::class, 'passageiros', 'user_id', 'evento_id')->orderBy('data_inicio', 'desc');
     }
 
     public function passageiros(): HasMany
