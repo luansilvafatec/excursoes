@@ -25,7 +25,7 @@ class Evento extends Model
                 $date = Carbon::parse($interessado->updated_at);
 
                 // Adiciona 5 dias à data
-                $date->addDays(5);
+                $date->addDays($evento->dias_reserva);
 
                 if($date <= Carbon::now()){
                     $passageiro = Passageiro::find($interessado->id);
@@ -125,7 +125,13 @@ class Evento extends Model
     public function getDiaMesAttribute() : string{
         return strtoupper(Carbon::parse($this->data_inicio)->locale('pt_BR')->translatedFormat('d'));
     }
+    public function getPagamentoAteAttribute() : string{
+        return $this->pagamento_data_fim->format('d/m');;
+    }
     public function getValorFormatadoAttribute() : string{
+        return number_format($this->valor, 2, ',', '.');
+    }
+    public function getValorMinimoFormatadoAttribute() : string{
         return number_format($this->valor, 2, ',', '.');
     }
     public function getSaidaFatecFormatadaAttribute() : string{

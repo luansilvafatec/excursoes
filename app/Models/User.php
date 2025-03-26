@@ -165,8 +165,8 @@ class User extends Authenticatable
         // Cria uma instância do Carbon a partir da data
         $date = Carbon::parse($createdAt);
 
-        // Adiciona 5 dias à data
-        $date->addDays(5);
+        // Adiciona x dias à data
+        $date->addDays($evento->dias_reserva);
 
         // Formata a data no formato 'd/m/Y H:i'
         $formattedDate = $date->format('d/m/Y H:i');

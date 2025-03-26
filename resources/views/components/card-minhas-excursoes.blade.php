@@ -42,7 +42,11 @@
                 <p>Data: {{ $evento->dia_mes }} de {{ $evento->mes }}</p>
                 <p>Saída: {{ $evento->saida_fatec_formatada }}</p>
                 <p>Valor: R${{ $evento->valor_formatado }}</p>
-                <a class="font-light underline" href="{{ route('evento', $evento) }}">+ Detalhes</a>
+                @if ($evento->inicio > now())
+                    <a class="font-light underline" href="{{ route('evento', $evento) }}">+ Detalhes</a>
+                @else
+                    <p>Eaí, curtiu? Bora para outra!!</p>
+                @endif
             </div>
         </div>
     </div>

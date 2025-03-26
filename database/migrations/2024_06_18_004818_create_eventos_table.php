@@ -24,7 +24,13 @@ return new class extends Migration
             $table->integer("meta_vagas")->nullable();
             $table->float("valor")->nullable();
             $table->float("pagamento_minimo")->nullable();
+            $table->integer("dias_reserva")->default(7);
+            $table->string("pagamento_pix_chave")->nullable();
+            $table->string("pagamento_pix_envio_comprovante")->nullable();
+            $table->date("pagamento_data_fim")->nullable();
             $table->boolean("ingresso_incluso")->default(false);
+            $table->string("ingresso_link_compra")->nullable();
+            $table->text("ingresso_texto")->nullable();
             $table->date("data_inscricao_inicio");
             $table->date("data_inscricao_fim")->nullable();
             $table->date("data_inicio");
