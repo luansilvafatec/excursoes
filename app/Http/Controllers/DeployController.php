@@ -8,8 +8,13 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class DeployController extends Controller
 {
+
     public function deploy()
     {
+        //git -c safe.directory=/app -C /app pull
+
+
+
         $validPassword = env('GIT_PASSWORD'); // Altere para a senha desejada
 
         if ($_POST['senha'] !== $validPassword) {
