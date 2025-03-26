@@ -32,7 +32,7 @@
                 </div>
             @else
                 <!-- Lista excursões -->
-                <div class="mt-5 flex flex-col items-center py-4">
+                <div class="mt-5 flex flex-col items-center py-4 space-y-6">
                     @foreach ($user->eventos as $evento)
                         <x-card-minhas-excursoes :evento="$evento" :user="$user"></x-card-minhas-excursoes>
                     @endforeach
