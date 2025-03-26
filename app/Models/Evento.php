@@ -126,7 +126,7 @@ class Evento extends Model
         return strtoupper(Carbon::parse($this->data_inicio)->locale('pt_BR')->translatedFormat('d'));
     }
     public function getPagamentoAteAttribute() : string{
-        return $this->pagamento_data_fim->format('d/m');;
+        return Carbon::parse($this->pagamento_data_fim)->format('d/m');;
     }
     public function getValorFormatadoAttribute() : string{
         return number_format($this->valor, 2, ',', '.');
