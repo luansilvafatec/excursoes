@@ -24,3 +24,4 @@ yarn-error.log
 /app/Providers/AppServiceProvider.php
 /app/Providers/AppServiceProvider.php
 /config/app.php
+config/app.php
