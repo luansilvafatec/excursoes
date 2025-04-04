@@ -22,3 +22,5 @@ yarn-error.log
 /.vscode
 app/Providers/AppServiceProvider.php
 app/Providers/AppServiceProvider.php
+app/Providers/AppServiceProvider.php
+config/app.php
