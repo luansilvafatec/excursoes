@@ -168,6 +168,14 @@ class User extends Authenticatable
         // Adiciona x dias à data
         $date->addDays($evento->dias_reserva);
 
+        //verifica se a data é superior ao inscricao_fim
+        $inscricao_fim = Carbon::parse($evento->data_inscricao_fim);
+
+        if($date > $inscricao_fim){
+            $date = $inscricao_fim;
+        }
+
+
         // Formata a data no formato 'd/m/Y H:i'
         $formattedDate = $date->format('d/m/Y H:i');
 

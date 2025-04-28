@@ -12,6 +12,8 @@ class DeployController extends Controller
     public function deploy()
     {
         //git -c safe.directory=/app -C /app pull
+        //PATH=/opt/bitnami/node/bin:$PATH npm install
+        //PATH=/opt/bitnami/node/bin:$PATH npm run build
 
 
 

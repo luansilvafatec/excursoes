@@ -32,7 +32,7 @@
             <p class="text-2xl">Pagamento com PIX!</p>
 
             <p class="mt-4">O valor total deve ser pago até
-                dia 20/09</p>
+                dia {{$evento->pagamento_ate}}</p>
 
             <p class="mt-4">Realize o pagamento efetuando um PIX para:</p>
 
@@ -95,7 +95,7 @@
             class="flex flex-col items-center justify-center h-full transition ease-out duration-700 transform opacity-100"
             wire:transition.scale.origin.top>
             <p class="text-2xl">Você já pagou uma parte!</p>
-            <p class="mt-4">Lembre-se de pagar o valor total até dia 20/09</p>
+            <p class="mt-4">Lembre-se de pagar o valor total até dia {{$evento->pagamento_ate}}</p>
 
             <div class="my-4 w-full rounded-lg px-2 py-2 md:ml-5 text-left">
 
