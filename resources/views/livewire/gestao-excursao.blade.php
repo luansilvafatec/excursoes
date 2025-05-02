@@ -92,10 +92,8 @@
             <div id="dados" class="sm:p-4 lg:w-2/5">
                 @if ($passageiro_selecionado)
                     <div class="rounded-lg bg-gray-600 p-4 text-white sticky top-0">
-                        <div wire:loading>
-                            <div>
+                        <div wire:loading.class.remove="hidden" class="hidden">
                                 carregando...
-                            </div>
                         </div>
                         <div wire:loading.remove>
                             <div>
