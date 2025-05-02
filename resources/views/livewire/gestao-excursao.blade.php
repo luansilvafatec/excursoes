@@ -50,9 +50,9 @@
                         @foreach ($evento->passageiros as $passageiro)
                             <tr @class([
                                 'odd:bg-gray-200' => !$passageiro->menor_18,
-                                'bg-orange-200' => ($passageiro->menor_18 && !$passageiro->menor_16),
+                                'bg-orange-200' => $passageiro->menor_18 && !$passageiro->menor_16,
                                 'bg-red-200' => $passageiro->menor_16,
-                                'border-b border-gray-400'
+                                'border-b border-gray-400',
                             ])>
                                 <td>{{ $passageiro->user->nome_formatado }}</td>
                                 <td class="">{{ $passageiro->status_formatado }}</td>
@@ -92,86 +92,98 @@
             <div id="dados" class="sm:p-4 lg:w-2/5">
                 @if ($passageiro_selecionado)
                     <div class="rounded-lg bg-gray-600 p-4 text-white sticky top-0">
-                        <div>
-                            <div class="mb-2 text-center font-bold">{{ $passageiro_selecionado->user->nome_formatado }}
-                            </div>
-                            <div class="flex justify-between">
-                                <div><span class="font-bold">Tipo:
-                                    </span>{{ $passageiro_selecionado->user->tipo_formatado }}</div>
-                                <div><span class="font-bold">CPF: </span>{{ $passageiro_selecionado->user->CPF }}</div>
-                            </div>
-                            <div class="flex justify-between">
-                                <div><span class="font-bold">Celular:
-                                    </span>{{ $passageiro_selecionado->user->celular }}</div>
-                                <div><span class="font-bold">Nascimento:
-                                    </span>{{ $passageiro_selecionado->user->nascimento }}
-                                    ({{ $passageiro_selecionado->idade }})</div>
+                        <div wire:loading>
+                            <div>
+                                carregando...
                             </div>
                         </div>
-                        <form class="" wire:submit.prevent="addPagamento">
-                            <div class="gap-2 sm:flex">
-                                <div class="flex flex-col">
-                                    <label for="valor">Valor</label>
-                                    <input name="valor" id="valor" wire:model="valor"
-                                        class="base-input text-black" type="text" />
+                        <div wire:loading.remove>
+                            <div>
+                                <div class="mb-2 text-center font-bold">
+                                    {{ $passageiro_selecionado->user->nome_formatado }}
                                 </div>
-                                <div class="flex grow flex-col">
-                                    <label for="tipo_pagamento">Tipo</label>
-                                    <select wire:model="tipo_pagamento" class="base-input text-black"
-                                        name="tipo_pagamento" id="tipo_pagamento">
-                                        <option value="1">Dinheiro</option>
-                                        <option value="2">PIX Conta</option>
-                                        <option value="3">PIX Online</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="gap-2 sm:flex">
-                                <div class="flex grow flex-col">
-                                    <label for="data">Data</label>
-                                    <input wire:model="data" name="data" id="data" class="base-input text-black"
-                                        type="datetime-local" />
-                                </div>
-                                <div class="flex flex-col justify-end">
-                                    <button type="submit" class="rounded-lg bg-green-500 p-2 font-bold">Salvar</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="mt-6">
-                            <div class="flex justify-around ">
-                                <div><span class="font-bold">Pago:
-                                    </span>R${{ $passageiro_selecionado->total_pago_desconto_formatado }}</div>
-                                <div><span class="font-bold">Falta:
-                                    </span>R${{ $passageiro_selecionado->total_falta_desconto_formatado }}</div>
-                            </div>
-                            <div class="mb-4 h-2.5 w-full rounded-full bg-orange-300 mt-2">
-                                <div class="h-2.5 rounded-full bg-emerald-500"
-                                    style="width: {{ $passageiro_selecionado->total_percent }}%">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="max-h-48 overflow-auto rounded bg-gray-200 mt-1 text-black">
-                            <ol class="relative ml-2 border-s border-gray-500">
-                                @if ($passageiro_selecionado->pagamentos->count() == 0)
-                                    <div class="text-center text-sm py-6">
-                                        <p>Nenhum pagamento realizado 😢</p>
-
+                                <div class="flex justify-between">
+                                    <div><span class="font-bold">Tipo:
+                                        </span>{{ $passageiro_selecionado->user->tipo_formatado }}</div>
+                                    <div><span class="font-bold">CPF: </span>{{ $passageiro_selecionado->user->CPF }}
                                     </div>
-                                @endif
-                                @foreach ($passageiro_selecionado->pagamentos as $pagamento)
-                                    <li class="mb-2 ms-4">
-                                        <div
-                                            class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-500">
+                                </div>
+                                <div class="flex justify-between">
+                                    <div><span class="font-bold">Celular:
+                                        </span>{{ $passageiro_selecionado->user->celular }}</div>
+                                    <div><span class="font-bold">Nascimento:
+                                        </span>{{ $passageiro_selecionado->user->nascimento }}
+                                        ({{ $passageiro_selecionado->idade }})</div>
+                                </div>
+                            </div>
+                            <form class="" wire:submit.prevent="addPagamento">
+                                <div class="gap-2 sm:flex">
+                                    <div class="flex flex-col">
+                                        <label for="valor">Valor</label>
+                                        <input name="valor" id="valor" wire:model="valor"
+                                            class="base-input text-black" type="text" />
+                                    </div>
+                                    <div class="flex grow flex-col">
+                                        <label for="tipo_pagamento">Tipo</label>
+                                        <select wire:model="tipo_pagamento" class="base-input text-black"
+                                            name="tipo_pagamento" id="tipo_pagamento">
+                                            <option value="1">Dinheiro</option>
+                                            <option value="2">PIX Conta</option>
+                                            <option value="3">PIX Online</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="gap-2 sm:flex">
+                                    <div class="flex grow flex-col">
+                                        <label for="data">Data</label>
+                                        <input wire:model="data" name="data" id="data"
+                                            class="base-input text-black" type="datetime-local" />
+                                    </div>
+                                    <div class="flex flex-col justify-end">
+                                        <button type="submit"
+                                            class="rounded-lg bg-green-500 p-2 font-bold">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="mt-6">
+                                <div class="flex justify-around ">
+                                    <div><span class="font-bold">Pago:
+                                        </span>R${{ $passageiro_selecionado->total_pago_desconto_formatado }}</div>
+                                    <div><span class="font-bold">Falta:
+                                        </span>R${{ $passageiro_selecionado->total_falta_desconto_formatado }}</div>
+                                </div>
+                                <div class="mb-4 h-2.5 w-full rounded-full bg-orange-300 mt-2">
+                                    <div class="h-2.5 rounded-full bg-emerald-500"
+                                        style="width: {{ $passageiro_selecionado->total_percent }}%">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="max-h-48 overflow-auto rounded bg-gray-200 mt-1 text-black">
+                                <ol class="relative ml-2 border-s border-gray-500">
+                                    @if ($passageiro_selecionado->pagamentos->count() == 0)
+                                        <div class="text-center text-sm py-6">
+                                            <p>Nenhum pagamento realizado 😢</p>
+
                                         </div>
-                                        <p class="mb-1 text-sm font-normal text-gray-400">
-                                            {{ $pagamento->data_hora_formatado }}
-                                        </p>
-                                        <p class="text-sm font-normal text-gray-500">{{ $pagamento->meio_formatado }}
-                                        </p>
-                                        <h3 class="font-semibold text-green-800">R$ {{ $pagamento->valor_formatado }}
-                                        </h3>
-                                    </li>
-                                @endforeach
-                            </ol>
+                                    @endif
+                                    @foreach ($passageiro_selecionado->pagamentos as $pagamento)
+                                        <li class="mb-2 ms-4">
+                                            <div
+                                                class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-500">
+                                            </div>
+                                            <p class="mb-1 text-sm font-normal text-gray-400">
+                                                {{ $pagamento->data_hora_formatado }}
+                                            </p>
+                                            <p class="text-sm font-normal text-gray-500">
+                                                {{ $pagamento->meio_formatado }}
+                                            </p>
+                                            <h3 class="font-semibold text-green-800">R$
+                                                {{ $pagamento->valor_formatado }}
+                                            </h3>
+                                        </li>
+                                    @endforeach
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 @endif
