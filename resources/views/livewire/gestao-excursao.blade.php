@@ -48,7 +48,12 @@
                     </thead>
                     <tbody>
                         @foreach ($evento->passageiros as $passageiro)
-                            <tr class="odd:bg-gray-200">
+                            <tr @class([
+                                'odd:bg-gray-200' => !$passageiro->menor_18,
+                                'bg-orange-200' => ($passageiro->menor_18 && !$passageiro->menor_16),
+                                'bg-red-200' => $passageiro->menor_16,
+                                'border-b border-gray-400'
+                            ])>
                                 <td>{{ $passageiro->user->nome_formatado }}</td>
                                 <td class="">{{ $passageiro->status_formatado }}</td>
                                 @switch($passageiro->status)
@@ -68,7 +73,7 @@
                                         <td class="text-center">{{ $passageiro->ate_reserva_formatado }}</td>
                                     @break
                                 @endswitch
-                                <td class="cursor-pointer" >
+                                <td class="cursor-pointer">
                                     <a href="#dados" wire:click="selecionaPassageiro({{ $passageiro->id }})">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="mx-auto size-6">
@@ -86,7 +91,7 @@
             </div>
             <div id="dados" class="sm:p-4 lg:w-2/5">
                 @if ($passageiro_selecionado)
-                    <div  class="rounded-lg bg-gray-600 p-4 text-white sticky top-0">
+                    <div class="rounded-lg bg-gray-600 p-4 text-white sticky top-0">
                         <div>
                             <div class="mb-2 text-center font-bold">{{ $passageiro_selecionado->user->nome_formatado }}
                             </div>
@@ -99,7 +104,8 @@
                                 <div><span class="font-bold">Celular:
                                     </span>{{ $passageiro_selecionado->user->celular }}</div>
                                 <div><span class="font-bold">Nascimento:
-                                    </span>{{ $passageiro_selecionado->user->nascimento }}</div>
+                                    </span>{{ $passageiro_selecionado->user->nascimento }}
+                                    ({{ $passageiro_selecionado->idade }})</div>
                             </div>
                         </div>
                         <form class="" wire:submit.prevent="addPagamento">
